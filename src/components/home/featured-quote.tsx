@@ -9,7 +9,7 @@ import { ScrubWords } from "@/components/motion/scrub-words";
 import { getAutor, getCitacoes, getLivro } from "@/lib/content";
 
 /** Citação da faixa preta da home (slug em content/citacoes). */
-export const FEATURED_QUOTE = "marx-estrada-real";
+export const FEATURED_QUOTE = "marx-tempo-disponivel";
 
 /**
  * Citação em destaque na faixa preta: retrato de Marx em preto e branco como
