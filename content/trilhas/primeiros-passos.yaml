@@ -1,0 +1,46 @@
+titulo: "Primeiros passos no marxismo"
+descricao: "Um percurso curto para quem nunca leu Marx: conceitos básicos, dois textos clássicos curtos e os capítulos do Livro I de O capital em que aparece a origem da mais-valia."
+nivel: "introdutorio"
+duracao: "4 semanas"
+ordem: 1
+etapas:
+  - tipo: "artigo"
+    titulo: "O que é mais-valia, em cinco minutos"
+    referencia: "o-que-e-mais-valia"
+    tempo: "10 min"
+    perguntas:
+      - "De onde vem o lucro, segundo Marx, se as mercadorias são trocadas por equivalentes?"
+      - "Qual é a diferença entre vender o trabalho e vender a força de trabalho?"
+  - tipo: "verbete"
+    titulo: "Luta de classes"
+    referencia: "luta-de-classes"
+    tempo: "15 min"
+    perguntas:
+      - "Por que, para Marx, as classes se definem pela relação com os meios de produção, e não apenas pela renda?"
+  - tipo: "livro"
+    titulo: "Manifesto do Partido Comunista"
+    referencia: "manifesto-comunista"
+    tempo: "1 semana"
+    perguntas:
+      - "Que papel o Manifesto atribui à burguesia na história?"
+      - "O que mudou e o que continua reconhecível na descrição do mercado mundial feita em 1848?"
+  - tipo: "livro"
+    titulo: "Trabalho assalariado e capital"
+    referencia: "trabalho-assalariado-e-capital"
+    tempo: "1 semana"
+    perguntas:
+      - "Como o salário pode subir e, ainda assim, a distância entre trabalhadores e capitalistas aumentar?"
+      - "O que Marx entende por capital nesse texto?"
+  - tipo: "verbete"
+    titulo: "Fetichismo da mercadoria"
+    referencia: "fetichismo-da-mercadoria"
+    tempo: "20 min"
+    perguntas:
+      - "O que significa dizer que relações entre pessoas aparecem como relações entre coisas?"
+  - tipo: "capitulo"
+    titulo: "O capital, Livro I: capítulos 4 e 5"
+    referencia: "o-capital-livro-1"
+    tempo: "2 semanas"
+    perguntas:
+      - "Por que a fórmula D-M-D' parece contraditória à primeira vista?"
+      - "O que distingue o processo de trabalho do processo de valorização?"

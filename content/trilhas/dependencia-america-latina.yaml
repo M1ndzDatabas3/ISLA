@@ -1,0 +1,47 @@
+titulo: "Dependência e América Latina"
+descricao: "Do sentido da colonização à teoria marxista da dependência: como pensadores latino-americanos explicaram a posição subordinada da região no capitalismo mundial."
+nivel: "intermediario"
+duracao: "6 semanas"
+ordem: 2
+etapas:
+  - tipo: "artigo"
+    titulo: "Caio Prado Jr. e o sentido da colonização"
+    referencia: "caio-prado-sentido-da-colonizacao"
+    tempo: "15 min"
+    perguntas:
+      - "O que Caio Prado quer dizer com sentido da colonização?"
+      - "Que traços da economia colonial ainda aparecem no Brasil de hoje?"
+  - tipo: "livro"
+    titulo: "Imperialismo, estágio superior do capitalismo"
+    referencia: "imperialismo-estagio-superior"
+    tempo: "1 semana"
+    perguntas:
+      - "Quais são os traços do imperialismo apontados por Lênin?"
+      - "Por que a exportação de capitais ganha peso em relação à exportação de mercadorias?"
+  - tipo: "verbete"
+    titulo: "Dependência"
+    referencia: "dependencia"
+    tempo: "15 min"
+    perguntas:
+      - "Em que a teoria marxista da dependência se distingue das teses da Cepal?"
+  - tipo: "livro"
+    titulo: "Dialética da dependência"
+    referencia: "dialetica-da-dependencia"
+    tempo: "2 semanas"
+    perguntas:
+      - "Por que, segundo Marini, a inserção da América Latina no mercado mundial favoreceu a mais-valia relativa nos países centrais?"
+      - "Quais são as formas de superexploração descritas no texto?"
+  - tipo: "artigo"
+    titulo: "Superexploração: o conceito que Marini deixou para o século XXI"
+    referencia: "superexploracao-marini"
+    tempo: "20 min"
+    perguntas:
+      - "Que situações de trabalho atuais podem ser analisadas com a categoria de superexploração?"
+      - "Quais são as principais críticas ao conceito, e como seus defensores respondem?"
+  - tipo: "livro"
+    titulo: "O capitalismo dependente latino-americano"
+    referencia: "o-capitalismo-dependente-latino-americano"
+    tempo: "2 semanas"
+    perguntas:
+      - "Que critérios Vânia Bambirra usa para distinguir tipos de países dependentes na América Latina?"
+      - "Como o capital estrangeiro muda o sentido da industrialização na região?"

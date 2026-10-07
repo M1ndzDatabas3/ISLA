@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+build
+.env*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+.vercel
+coverage
+.gstack/
+
+# Original do vídeo do hero (77 MB). A versão para web fica em public/media/; ver scripts/hero-video.swift.
+public/herovideo.mov
+.content-collections

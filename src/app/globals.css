@@ -1,0 +1,640 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "lenis/dist/lenis.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================================
+   Tokens
+   Branco, vermelho vivo e preto. Paleta espelhada em src/lib/tokens.ts
+   (o teste tokens.test.ts confere). "paper" e "ink" são metáforas de impressão.
+   ========================================================================== */
+
+:root {
+  --paper: #ffffff;
+  --ink: #0a0a0a;
+  --ink-muted: #525252;
+  --red: #cd0000;
+  --red-dark: #a30000;
+  --red-text: #cd0000;
+  --hair-light: #e5e5e5;
+
+  /* Semânticos: tema claro (branco puro) */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --surface: var(--paper);
+  --surface-ink: var(--ink);
+  --surface-ink-foreground: var(--paper);
+  --muted: #f4f4f4;
+  --muted-foreground: var(--ink-muted);
+  --brand: var(--red);
+  --brand-hover: var(--red-dark);
+  --brand-foreground: var(--paper);
+  --brand-text: var(--red-text);
+  /* Linha fina decorativa (separadores) e linha de estrutura (texto/controles) */
+  --hair: var(--hair-light);
+  --rule: var(--ink);
+
+  /* Nomes esperados pelos componentes shadcn */
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --secondary: var(--paper);
+  --secondary-foreground: var(--ink);
+  --accent: #f4f4f4; /* só para hover discreto */
+  --accent-foreground: var(--ink);
+  --destructive: var(--red-text);
+  --border: var(--hair);
+  --input: #8a8a8a; /* 3,4:1 sobre branco: contraste mínimo de controles */
+  --ring: var(--ink);
+  --radius: 0px;
+
+  --header-h: 64px;
+  --bottom-nav-h: 0px;
+  --gutter: clamp(20px, 4vw, 48px);
+  --container-max: 1360px;
+}
+
+@media (max-width: 1023.98px) {
+  :root {
+    --bottom-nav-h: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 80px;
+  }
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #f5f5f5;
+  --surface: #121212;
+  --surface-ink: #000000;
+  --surface-ink-foreground: #f5f5f5;
+  --muted: #171717;
+  --muted-foreground: #a3a3a3;
+  --brand: #cd0000;
+  --brand-hover: #a30000;
+  --brand-foreground: #ffffff;
+  --brand-text: #ff4747;
+  --hair: #262626;
+  --rule: #f5f5f5;
+
+  --card: #0a0a0a;
+  --card-foreground: #f5f5f5;
+  --popover: #121212;
+  --popover-foreground: #f5f5f5;
+  --secondary: #0a0a0a;
+  --secondary-foreground: #f5f5f5;
+  --accent: #1c1c1c;
+  --accent-foreground: #f5f5f5;
+  --destructive: #ff4747;
+  --border: var(--hair);
+  --input: #737373;
+  --ring: #f5f5f5;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-ink: var(--surface-ink);
+  --color-surface-ink-foreground: var(--surface-ink-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-text: var(--brand-text);
+  --color-hair: var(--hair);
+  --color-rule: var(--rule);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Cores absolutas (não mudam com o tema): símbolo, capas, fotos */
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-red: var(--red);
+  --color-red-dark: var(--red-dark);
+  --color-red-text: var(--red-text);
+
+  /* Archivo em tudo: títulos na semicondensada, leitura e interface na largura normal */
+  --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-text: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
+
+  /* Sombra só em sobreposições (menus, modais, toasts) */
+  --shadow-overlay: 0 18px 48px -18px rgb(0 0 0 / 0.28), 0 2px 6px rgb(0 0 0 / 0.06);
+}
+
+@theme {
+  --breakpoint-xs: 22.5rem;
+
+  /* Escala tipográfica fluida (títulos em Archivo semicondensada, caixa normal) */
+  --text-hero: clamp(2rem, 9.8vw, 4.75rem); /* largura toda; no desktop o hero usa 5,6vw */
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.028em;
+  --text-h1: clamp(2.25rem, 1.25rem + 3.4vw, 4.5rem);
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: clamp(1.75rem, 1.2rem + 1.9vw, 2.75rem);
+  --text-h2--line-height: 1.04;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: clamp(1.3rem, 1.12rem + 0.7vw, 1.75rem);
+  --text-h3--line-height: 1.12;
+  --text-h3--letter-spacing: -0.015em;
+  --text-quote: clamp(1.5rem, 1.1rem + 1.6vw, 2.6rem);
+  --text-quote--line-height: 1.2;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3rem);
+  --text-lead--line-height: 1.55;
+  --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-body--line-height: 1.65;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+
+  /*
+   * Ritmo vertical. Três passos, sempre os mesmos:
+   * section: entre seções (padding de cada seção);
+   * block: entre blocos dentro de uma seção (ex.: números e estante);
+   * section-head: entre o título da seção e o conteúdo.
+   * Gera py-section, mt-block, mb-section-head etc.
+   */
+  --spacing-section: clamp(4rem, 2.75rem + 3.6vw, 6rem); /* 64 → 96 */
+  --spacing-block: clamp(2.5rem, 2rem + 1.8vw, 3.5rem); /* 40 → 56 */
+  --spacing-section-head: clamp(2rem, 1.6rem + 1.4vw, 3rem); /* 32 → 48 */
+
+  /* Cantos retos em tudo; só rounded-full continua existindo */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+
+  --ease-poster: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--brand);
+    color: var(--brand-foreground);
+  }
+
+  /* Títulos: Archivo semicondensada, peso 600, espaçamento fechado.
+     Utilitários de peso (font-medium etc.) continuam valendo por cima. */
+  .font-display {
+    font-stretch: 87.5%;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ==========================================================================
+   Tons de seção (uso raro). Redefinem os tokens para o conteúdo se adaptar.
+   ========================================================================== */
+
+@layer components {
+  .tone-paper,
+  .tone-surface,
+  .tone-ink,
+  .tone-red {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  .tone-surface {
+    --background: var(--surface);
+    --card: var(--surface);
+  }
+
+  .tone-ink {
+    --background: var(--surface-ink);
+    --foreground: var(--surface-ink-foreground);
+    --card: var(--surface-ink);
+    --card-foreground: var(--surface-ink-foreground);
+    --muted-foreground: #a3a3a3;
+    --brand-text: #ff4747;
+    --hair: #2a2a2a;
+    --rule: var(--surface-ink-foreground);
+    --border: var(--hair);
+    --input: #737373;
+    --accent: #1c1c1c;
+    --accent-foreground: var(--surface-ink-foreground);
+    --secondary: var(--surface-ink);
+    --secondary-foreground: var(--surface-ink-foreground);
+    --ring: var(--surface-ink-foreground);
+  }
+
+  /* Sobre vermelho o texto é sempre branco; o botão principal vira preto. */
+  .tone-red {
+    --background: var(--red);
+    --foreground: var(--paper);
+    --card: var(--red);
+    --card-foreground: var(--paper);
+    --muted-foreground: var(--paper);
+    --brand: var(--ink);
+    --brand-hover: #000000;
+    --brand-foreground: var(--paper);
+    --brand-text: var(--paper);
+    --primary: var(--ink);
+    --primary-foreground: var(--paper);
+    --secondary: var(--red);
+    --hair: rgb(255 255 255 / 0.35);
+    --rule: var(--paper);
+    --border: var(--hair);
+    --input: var(--paper);
+    --accent: var(--red-dark);
+    --accent-foreground: var(--paper);
+    --ring: var(--paper);
+  }
+
+  .tone-red input::placeholder,
+  .tone-red textarea::placeholder {
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  /* Símbolo provisório em tom "auto" sobre vermelho: o quadrado ganha contorno */
+  .tone-red [data-logo-tone="auto"] .logo-square {
+    stroke: currentColor;
+  }
+
+  /* Sublinhado fino que desliza (links de texto) */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 0.18em;
+    transition: background-size 0.35s var(--ease-poster);
+  }
+
+  .link-underline:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+
+  /* Sublinhado que aparece no hover de títulos de card */
+  .title-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.45s var(--ease-poster);
+  }
+
+  .group:hover .title-underline,
+  .group:focus-visible .title-underline {
+    background-size: 100% 1px;
+  }
+
+  /* Prosa de leitura longa */
+  .prose-editorial {
+    font-family: var(--font-text);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    max-width: 68ch;
+  }
+
+  .prose-editorial > * + * {
+    margin-top: 1em;
+  }
+
+  .prose-editorial a {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .prose-editorial h2,
+  .prose-editorial h3 {
+    font-family: var(--font-display);
+    font-stretch: 87.5%;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin-top: 1.8em;
+  }
+
+  .prose-editorial h2 {
+    font-size: var(--text-h3);
+  }
+
+  .prose-editorial blockquote {
+    border-left: 2px solid var(--brand);
+    padding-left: 1.1em;
+    font-style: italic;
+  }
+
+  .prose-editorial strong {
+    font-weight: 600;
+  }
+
+  .prose-editorial ul,
+  .prose-editorial ol {
+    padding-left: 1.25em;
+  }
+
+  .prose-editorial ul {
+    list-style: disc;
+  }
+
+  .prose-editorial ol {
+    list-style: decimal;
+  }
+
+  .prose-editorial li + li {
+    margin-top: 0.4em;
+  }
+
+  /* Chamadas e lista de notas de rodapé (GFM) */
+  .prose-editorial sup a[data-footnote-ref] {
+    margin-left: 0.1em;
+    padding: 0 0.15em;
+    font-family: var(--font-sans);
+    font-size: 0.72em;
+    font-weight: 600;
+    color: var(--brand-text);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .prose-editorial section[data-footnotes] {
+    margin-top: 3.5em;
+    padding-top: 1.5em;
+    border-top: 1px solid var(--hair);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+  }
+
+  .prose-editorial section[data-footnotes] h2 {
+    margin-top: 0;
+    font-size: 0.875rem;
+    font-family: var(--font-sans);
+    font-stretch: 100%;
+    letter-spacing: 0;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .prose-editorial section[data-footnotes] a[data-footnote-backref] {
+    margin-left: 0.25em;
+    text-decoration: none;
+  }
+
+  .prose-editorial :target {
+    background-color: color-mix(in srgb, var(--brand) 10%, transparent);
+  }
+
+  /* Quadrado vermelho que fecha os títulos (o símbolo no lugar do ponto) */
+  .title-mark {
+    display: inline-block;
+    width: 0.15em;
+    height: 0.15em;
+    margin-left: 0.06em;
+    background-color: var(--red);
+    vertical-align: 0.02em;
+  }
+}
+
+/* ==========================================================================
+   Utilitários
+   ========================================================================== */
+
+@utility halftone {
+  background-image: radial-gradient(circle, currentColor 1px, transparent 1.3px);
+  background-size: 6px 6px;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Filete entre seções do mesmo tom, alinhado às margens do conteúdo (não sangra) */
+@utility section-divider {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline: calc(max(0px, (100% - var(--container-max)) / 2) + var(--gutter));
+    height: 1px;
+    background-color: var(--hair);
+  }
+}
+
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 32px);
+}
+
+/* Duotone preto/vermelho para fotos históricas */
+@utility duotone {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--red);
+
+  & img {
+    filter: grayscale(1) contrast(1.15) brightness(1.05);
+    mix-blend-mode: multiply;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--ink);
+    mix-blend-mode: lighten;
+    pointer-events: none;
+  }
+}
+
+/* ==========================================================================
+   Entrada do hero em CSS: roda já na primeira pintura, sem esperar a hidratação
+   (sem piscar e sem atrasar o LCP). O GSAP cuida do que depende de rolagem.
+   ========================================================================== */
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.18);
+  }
+}
+
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 1.1s var(--ease-poster) both;
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.9s var(--ease-poster) both;
+}
+
+@utility animate-reveal-up {
+  animation: reveal-up 1.4s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+@utility animate-settle {
+  animation: settle 1.9s var(--ease-poster) both;
+}
+
+@utility animate-draw-x {
+  animation: draw-x 1s var(--ease-poster) both;
+  transform-origin: 0 50%;
+}
+
+@utility animate-marquee {
+  animation: marquee 90s linear infinite;
+}
+
+@utility animate-pop {
+  animation: pop 0.6s cubic-bezier(0.34, 1.8, 0.64, 1) both;
+}
+
+/* ==========================================================================
+   Movimento reduzido
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Header ao rolar: faixa preta, tudo em branco, hover em vermelho.
+   Fora das camadas de propósito, para valer sobre os utilitários de cor.
+   ========================================================================== */
+
+.site-header[data-scrolled] {
+  --background: var(--surface-ink);
+  --foreground: var(--surface-ink-foreground);
+  --muted-foreground: var(--surface-ink-foreground);
+  --brand-text: var(--red);
+  --hair: #262626;
+  --border: #262626;
+  --input: #525252;
+  --accent: #171717;
+  --accent-foreground: var(--surface-ink-foreground);
+  --popover: var(--surface-ink);
+  --popover-foreground: var(--surface-ink-foreground);
+  --ring: var(--surface-ink-foreground);
+}
+
+.site-header[data-scrolled] :is(a, button):hover,
+.site-header[data-scrolled] button[data-state="open"] {
+  color: var(--red);
+}

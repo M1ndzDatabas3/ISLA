@@ -1,0 +1,58 @@
+{
+  "files": {
+    "logo-horizontal": {
+      "file": "logo-horizontal.png",
+      "width": 775,
+      "height": 240,
+      "version": "43dc7363"
+    },
+    "logo-horizontal-light": {
+      "file": "logo-horizontal-light.png",
+      "width": 775,
+      "height": 240,
+      "version": "626b1b52"
+    },
+    "logo-horizontal-dark": {
+      "file": "logo-horizontal-dark.png",
+      "width": 775,
+      "height": 240,
+      "version": "d27a7a07"
+    },
+    "logo-simbolo": {
+      "file": "logo-simbolo.png",
+      "width": 256,
+      "height": 256,
+      "version": "3f3dae55"
+    },
+    "logo-vertical": {
+      "file": "logo-vertical.png",
+      "width": 520,
+      "height": 559,
+      "version": "a072cbae"
+    },
+    "logo-vertical-light": {
+      "file": "logo-vertical-light.png",
+      "width": 520,
+      "height": 559,
+      "version": "064b776d"
+    },
+    "favicon": {
+      "file": "favicon.png",
+      "width": 128,
+      "height": 128,
+      "version": "6e975697"
+    },
+    "apple-touch-icon": {
+      "file": "apple-touch-icon.png",
+      "width": 180,
+      "height": 180,
+      "version": "aa38f656"
+    },
+    "icon-512": {
+      "file": "icon-512.png",
+      "width": 512,
+      "height": 512,
+      "version": "5ce567b2"
+    }
+  }
+}

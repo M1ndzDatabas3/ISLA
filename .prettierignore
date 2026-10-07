@@ -1,0 +1,8 @@
+.next
+node_modules
+pnpm-lock.yaml
+src/components/brand/brand-manifest.json
+.content-collections
+
+# Textos editoriais: validados pelo scripts/content-check.mjs, sem reformatação automática
+content

@@ -1,0 +1,53 @@
+titulo: "Raça, classe e gênero no Brasil"
+descricao: "Um percurso por autoras e autores que pensaram o racismo e a opressão das mulheres como partes da formação do capitalismo brasileiro, da resistência escrava ao feminismo negro."
+nivel: "intermediario"
+duracao: "6 semanas"
+ordem: 3
+etapas:
+  - tipo: "artigo"
+    titulo: "Lélia Gonzalez e a categoria de amefricanidade"
+    referencia: "lelia-gonzalez-amefricanidade"
+    tempo: "15 min"
+    perguntas:
+      - "O que a categoria de amefricanidade revela que o nome América Latina esconde?"
+      - "O que Lélia Gonzalez chama de racismo por denegação?"
+  - tipo: "livro"
+    titulo: "Por um feminismo afro-latino-americano"
+    referencia: "por-um-feminismo-afro-latino-americano"
+    tempo: "1 semana"
+    perguntas:
+      - "Por que, para Lélia Gonzalez, o feminismo precisa incorporar a questão racial?"
+      - "Como raça, classe e gênero se combinam na situação da trabalhadora doméstica?"
+  - tipo: "livro"
+    titulo: "Rebeliões da senzala"
+    referencia: "rebelioes-da-senzala"
+    tempo: "2 semanas"
+    perguntas:
+      - "Como Clóvis Moura interpreta as revoltas e os quilombos na formação da sociedade brasileira?"
+      - "Que imagem do escravizado o livro contesta?"
+  - tipo: "verbete"
+    titulo: "Quilombagem"
+    referencia: "quilombagem"
+    tempo: "10 min"
+    perguntas:
+      - "Por que Clóvis Moura trata a quilombagem como um movimento, e não como episódios isolados?"
+  - tipo: "capitulo"
+    titulo: "A integração do negro na sociedade de classes (capítulos selecionados)"
+    referencia: "a-integracao-do-negro"
+    tempo: "1 semana"
+    perguntas:
+      - "Segundo Florestan Fernandes, por que a abolição não integrou a população negra ao trabalho livre em condições de igualdade?"
+      - "O que o autor chama de mito da democracia racial?"
+  - tipo: "verbete"
+    titulo: "Reprodução social"
+    referencia: "reproducao-social"
+    tempo: "15 min"
+    perguntas:
+      - "Quem realiza o trabalho que mantém e renova a força de trabalho, e como ele é remunerado?"
+  - tipo: "livro"
+    titulo: "Mulheres, raça e classe"
+    referencia: "mulheres-raca-e-classe"
+    tempo: "1 semana"
+    perguntas:
+      - "Como Angela Davis relaciona a experiência da escravidão às formas de trabalho das mulheres negras depois da abolição?"
+      - "Que paralelos e diferenças você encontra entre o caso estadunidense e o brasileiro?"
