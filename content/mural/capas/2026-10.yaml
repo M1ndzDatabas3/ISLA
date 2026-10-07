@@ -1,0 +1,7 @@
+mes: "2026-10"
+obra: colheita
+ilustra:
+  tipo: artigo
+  slug: mariategui-problema-da-terra
+texto: "Texto fictício de demonstração: quisemos desenhar o momento em que a terra trabalhada devolve alguma coisa a quem trabalha nela."
+demo: true

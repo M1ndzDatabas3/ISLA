@@ -31,7 +31,7 @@ export function SiteFooter() {
 
         <nav
           aria-label="Mapa do site"
-          className="col-span-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:col-span-7 lg:col-start-6"
+          className="col-span-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:col-span-7 lg:col-start-6"
         >
           {siteMap.map((group) => (
             <div key={group.title}>

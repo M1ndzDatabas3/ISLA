@@ -8,8 +8,8 @@ import { cn, hashString } from "@/lib/utils";
  * O sinal fica na faixa do meio, longe do autor (topo) e do título (base).
  */
 
-type Scheme = "red" | "ink" | "paper";
-type Glyph = "disco" | "anel" | "linha" | "quadrado" | "diagonal" | "cunha";
+export type Scheme = "red" | "ink" | "paper";
+export type Glyph = "disco" | "anel" | "linha" | "quadrado" | "diagonal" | "cunha";
 
 const byTradition: Record<Tradicao, { scheme: Scheme; glyph: Glyph }> = {
   "marxismo-classico": { scheme: "red", glyph: "disco" },
@@ -38,7 +38,10 @@ interface BookCoverProps {
   titulo: string;
   autor: string;
   ano?: number;
-  tradicao: Tradicao;
+  tradicao?: Tradicao;
+  /** Esquema e sinal explícitos (ex.: pôster dos clássicos do Mural), no lugar da tradição. */
+  scheme?: Scheme;
+  glyph?: Glyph;
   /** Semente da variação (normalmente o slug). */
   seed: string;
   className?: string;
@@ -61,8 +64,21 @@ function noOrphan(titulo: string) {
   return titulo.replace(/ (\S{1,3})$/, "\u00a0$1");
 }
 
-export function BookCover({ titulo, autor, ano, tradicao, seed, className }: BookCoverProps) {
-  const { scheme, glyph } = byTradition[tradicao];
+export function BookCover({
+  titulo,
+  autor,
+  ano,
+  tradicao,
+  scheme: schemeProp,
+  glyph: glyphProp,
+  seed,
+  className,
+}: BookCoverProps) {
+  const base = tradicao
+    ? byTradition[tradicao]
+    : { scheme: "paper" as Scheme, glyph: "linha" as Glyph };
+  const scheme = schemeProp ?? base.scheme;
+  const glyph = glyphProp ?? base.glyph;
   const { bg, fg, mark } = schemes[scheme];
   const right = hashString(seed) % 2 === 1;
 
@@ -73,9 +89,9 @@ export function BookCover({ titulo, autor, ano, tradicao, seed, className }: Boo
       style={{ backgroundColor: bg, color: fg }}
     >
       {scheme === "paper" ? <div className="absolute inset-0 border border-[#d4d4d4]" /> : null}
-      {/* No tema escuro a capa preta some no fundo: um filete sutil marca a borda */}
+      {/* No tema escuro e nas seções em tinta, a capa preta some no fundo: um filete marca a borda */}
       {scheme === "ink" ? (
-        <div className="absolute inset-0 hidden border border-white/15 dark:block" />
+        <div className="absolute inset-0 hidden border border-white/15 dark:block [.tone-ink_&]:block" />
       ) : null}
       <Glyph glyph={glyph} color={mark} right={right} />
       <div className="relative flex h-full flex-col justify-between p-[9cqi]">

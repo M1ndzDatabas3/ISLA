@@ -1,0 +1,19 @@
+titulo: "A cidade é nossa"
+artista: mare-vermelha
+ano: 2026
+linguagem: cartaz-e-design
+tecnica: "Lambe-lambe, impressão digital"
+dimensoes: "A2 (42 × 59,4 cm)"
+imagens:
+  - src: "/mural/mare-vermelha/a-cidade-e-nossa/principal.jpg"
+    alt: "Lambe-lambe em fundo claro com a frase A CIDADE É NOSSA em letras pretas no alto e, embaixo, prédios pretos de alturas variadas com janelas vermelhas acesas."
+descricao: "Obra fictícia de demonstração. Os prédios iluminados lembram quem trabalha à noite para a cidade funcionar."
+temas: ["cidade", "trabalho"]
+licenca: cc-by-nc
+permiteDownload: true
+arquivoParaDownload: "/mural/mare-vermelha/a-cidade-e-nossa/alta.jpg"
+impressao:
+  formato: "A2, papel jornal ou sulfite 75 g para lambe-lambe"
+  observacao: "Cole com grude de farinha; não cole sobre patrimônio tombado."
+publicadoEm: "2026-09-29"
+demo: true

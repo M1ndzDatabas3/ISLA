@@ -12,7 +12,6 @@ import {
   allEventos,
   allLivros,
   allMarcos,
-  allObrasCulturais,
   allTrilhas,
   type Artigo,
   type Autore,
@@ -22,7 +21,6 @@ import {
   type Evento,
   type Livro,
   type Marco,
-  type ObrasCulturai,
   type Trilha,
 } from "content-collections";
 
@@ -31,7 +29,6 @@ import { labelOf, levelIndex, type TaxonomyKey } from "@/lib/taxonomy";
 export type { Artigo, Conceito, Episodio, Evento, Livro, Marco, Trilha };
 export type Autor = Autore;
 export type Citacao = Citacoe;
-export type ObraCultural = ObrasCulturai;
 
 const collator = new Intl.Collator("pt-BR", { sensitivity: "base" });
 
@@ -236,10 +233,6 @@ export function getProximosEventos(agora = new Date(), limite = 4): Evento[] {
 
 export function getEpisodios(): Episodio[] {
   return [...allEpisodios].sort((a, b) => b.data.localeCompare(a.data));
-}
-
-export function getObrasCulturais(): ObraCultural[] {
-  return [...allObrasCulturais].sort((a, b) => a.ano - b.ano);
 }
 
 /* ----------------------------- Ordenação por nível ----------------------------- */

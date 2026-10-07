@@ -328,6 +328,34 @@
     appearance: none;
   }
 
+  /*
+   * Entradas animadas pelo GSAP (Mural): escondidas só quando há JavaScript
+   * (classe "js" posta no <head>) e movimento liberado, para não piscar.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    .js [data-split-reveal] {
+      visibility: hidden;
+    }
+    .js [data-clip-reveal] {
+      clip-path: inset(100% 0 0 0);
+    }
+  }
+
+  /* Entrevista do Mural: ### é a pergunta, os parágrafos são a resposta */
+  .entrevista h3 {
+    margin-top: 2em;
+    font-family: var(--font-display);
+    font-stretch: 87.5%;
+    font-weight: 600;
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+    color: var(--brand-text);
+  }
+
+  .entrevista h3:first-child {
+    margin-top: 0;
+  }
+
   /* Dado em revisão editorial ("[CONFERIR]" no conteúdo) */
   .conferir-mark {
     display: inline;

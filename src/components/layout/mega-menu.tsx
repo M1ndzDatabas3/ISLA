@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavigationMenu } from "radix-ui";
@@ -104,6 +105,23 @@ function MegaPanel({ item }: { item: MegaMenuItem }) {
 
       {item.feature ? (
         <div className="col-span-12 flex flex-col gap-3 border-l-2 border-brand pl-6 xl:col-span-3">
+          {item.feature.image ? (
+            <figure className="m-0 mb-2">
+              <Image
+                src={item.feature.image.src}
+                alt={item.feature.image.alt}
+                width={item.feature.image.width}
+                height={item.feature.image.height}
+                placeholder="blur"
+                blurDataURL={item.feature.image.blurDataURL}
+                sizes="240px"
+                className="h-auto max-h-48 w-auto max-w-full"
+              />
+              <figcaption className="mt-2 text-meta text-muted-foreground">
+                {item.feature.image.credit}
+              </figcaption>
+            </figure>
+          ) : null}
           <p className="font-display text-h3">{item.feature.title}</p>
           <p className="text-sm leading-relaxed text-muted-foreground">{item.feature.text}</p>
           <NavigationMenu.Link asChild>

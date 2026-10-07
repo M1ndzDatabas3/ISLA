@@ -21,7 +21,12 @@ const collections = {
   allCitacoes: ["content/citacoes", ".yaml"],
   allEventos: ["content/eventos", ".yaml"],
   allEpisodios: ["content/episodios", ".yaml"],
-  allObrasCulturais: ["content/cultura", ".yaml"],
+  allArtistas: ["content/mural/artistas", ".mdx"],
+  allObras: ["content/mural/obras", ".yaml"],
+  allExposicoes: ["content/mural/exposicoes", ".mdx"],
+  allClassicos: ["content/mural/classicos", ".mdx"],
+  allCapas: ["content/mural/capas", ".yaml"],
+  allMuralTextos: ["content/mural/textos", ".mdx"],
 };
 
 const builder = await createBuilder(join(process.cwd(), "content-collections.ts"));

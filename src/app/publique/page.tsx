@@ -8,7 +8,7 @@ export default function Page() {
     <ComingSoon
       section="publique"
       action={
-        <JoinDialog>
+        <JoinDialog caminho="conteudo">
           <button type="button" className="link-underline cursor-pointer text-sm font-medium">
             Quero escrever para o Instituto
           </button>

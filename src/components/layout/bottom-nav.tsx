@@ -1,6 +1,6 @@
 "use client";
 
-import { House, LibraryBig, Route, Search } from "lucide-react";
+import { Frame, House, LibraryBig, Route, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -8,7 +8,13 @@ import { useScrollState } from "@/hooks/use-scroll-state";
 import { bottomNav } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
-const icons = { inicio: House, leituras: LibraryBig, trilhas: Route, busca: Search } as const;
+const icons = {
+  inicio: House,
+  leituras: LibraryBig,
+  trilhas: Route,
+  mural: Frame,
+  busca: Search,
+} as const;
 
 /** Atalhos fixos no mobile. Some ao rolar para baixo e volta ao rolar para cima. */
 export function BottomNav() {
@@ -24,7 +30,7 @@ export function BottomNav() {
         hidden && "translate-y-full",
       )}
     >
-      <ul className="grid h-16 grid-cols-4">
+      <ul className="grid h-16 grid-cols-5">
         {bottomNav.map((item) => {
           const Icon = icons[item.key];
           const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -39,7 +45,7 @@ export function BottomNav() {
                 )}
               >
                 {active ? (
-                  <span aria-hidden className="absolute inset-x-6 top-0 h-0.5 bg-brand" />
+                  <span aria-hidden className="absolute inset-x-4 top-0 h-0.5 bg-brand" />
                 ) : null}
                 <Icon className="size-5" aria-hidden strokeWidth={1.5} />
                 {item.label}

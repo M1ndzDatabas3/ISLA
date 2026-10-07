@@ -1,0 +1,23 @@
+titulo: "Colheita"
+artista: coletivo-terra-riscada
+ano: 2024
+linguagem: artes-visuais
+tecnica: "Xilogravura sobre papel"
+dimensoes: "50 × 40 cm"
+imagens:
+  - src: "/mural/coletivo-terra-riscada/colheita/principal.jpg"
+    alt: "Xilogravura em preto, branco e vermelho: um sol vermelho nasce no horizonte entre raios pretos, sobre uma roça escura cortada por sulcos claros."
+descricao: "Obra fictícia de demonstração. O sol que nasce sobre a roça arada lembra que a colheita começa no trabalho de quem planta."
+comentarioCuratorial: "Os raios cortados à goiva dão à imagem o ritmo dos folhetos de cordel."
+temas: ["terra", "trabalho"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+textosRelacionados:
+  - tipo: artigo
+    slug: mariategui-problema-da-terra
+  - tipo: verbete
+    slug: acumulacao-primitiva
+disponivelParaVenda: true
+linkDeVenda: "https://example.org/loja"
+publicadoEm: "2026-09-20"
+demo: true

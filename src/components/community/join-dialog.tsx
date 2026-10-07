@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { Slot } from "radix-ui";
-import { startTransition, useActionState, useId, useState } from "react";
+import { startTransition, useActionState, useId, useRef, useState } from "react";
 
 import { registerInterest } from "@/app/actions/interesse";
+import { inscreverNoMural } from "@/app/actions/mural";
+import { ChamadaFields, inscricaoInicial } from "@/components/mural/chamada-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -32,24 +34,50 @@ const inicial: InteresseState = { status: "idle" };
 const [consentimentoAntes, consentimentoDepois] =
   consentimentoInteresse.texto.split("Política de privacidade");
 
+export type Caminho = "conteudo" | "artista";
+
+const caminhos: { value: Caminho; titulo: string; descricao: string }[] = [
+  {
+    value: "conteudo",
+    titulo: "Produzir conteúdo",
+    descricao: "Artigos, verbetes, resenhas e trilhas de estudo, com a equipe editorial.",
+  },
+  {
+    value: "artista",
+    titulo: "Mostrar minha obra no Mural",
+    descricao: "Para artistas que querem expor e fazer circular o próprio trabalho.",
+  },
+];
+
 /**
- * Modal "Faça parte": contato de quem quer criar e desenvolver conteúdo no site.
- * O gatilho pode ser um link de verdade (ex.: /sobre#participar): com JavaScript
- * o clique abre o modal; sem ele, ou para buscadores, o link leva à página.
+ * Modal "Participe": dois caminhos, produzir conteúdo com a equipe editorial
+ * ou se inscrever como artista no Mural Cultural (o mesmo formulário da
+ * chamada aberta). O gatilho pode ser um link de verdade (ex.: /sobre#participar):
+ * com JavaScript o clique abre o modal; sem ele, ou para buscadores, o link leva à página.
  */
-export function JoinDialog({ children }: { children: React.ReactNode }) {
+export function JoinDialog({
+  children,
+  caminho,
+}: {
+  children: React.ReactNode;
+  /** Caminho já escolhido ao abrir (ex.: "conteudo" na página Publique). */
+  caminho?: Caminho;
+}) {
   const [open, setOpen] = useState(false);
   // A cada abertura, um formulário novo (sem o estado do envio anterior).
   const [rodada, setRodada] = useState(0);
+  /** Quem abriu o modal recebe o foco de volta ao fechar (sem DialogTrigger, o Radix não sabe). */
+  const gatilho = useRef<HTMLElement | null>(null);
 
   return (
     <>
       <Slot.Root
         aria-haspopup="dialog"
-        onClick={(event: React.MouseEvent) => {
+        onClick={(event: React.MouseEvent<HTMLElement>) => {
           // Ctrl/⌘ + clique ainda abre o link em outra aba.
           if (event.metaKey || event.ctrlKey || event.shiftKey) return;
           event.preventDefault();
+          gatilho.current = event.currentTarget;
           setRodada((r) => r + 1);
           setOpen(true);
         }}
@@ -57,16 +85,140 @@ export function JoinDialog({ children }: { children: React.ReactNode }) {
         {children}
       </Slot.Root>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-2xl">
-          <JoinForm key={rodada} />
+        <DialogContent
+          className="max-w-2xl"
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            gatilho.current?.focus({ preventScroll: true });
+          }}
+        >
+          <Participe key={rodada} inicial={caminho} />
         </DialogContent>
       </Dialog>
     </>
   );
 }
 
-function JoinForm() {
-  const [state, action, pending] = useActionState(registerInterest, inicial);
+function Participe({ inicial: caminhoInicial }: { inicial?: Caminho }) {
+  const [caminho, setCaminho] = useState<Caminho | null>(caminhoInicial ?? null);
+  const [contato, enviarContato, enviandoContato] = useActionState(registerInterest, inicial);
+  const [inscricao, enviarInscricao, enviandoInscricao] = useActionState(
+    inscreverNoMural,
+    inscricaoInicial,
+  );
+  const id = useId();
+
+  const sucesso =
+    contato.status === "success"
+      ? { titulo: "Contato enviado", mensagem: contato.message }
+      : inscricao.status === "success"
+        ? { titulo: "Inscrição enviada", mensagem: inscricao.message }
+        : null;
+
+  if (sucesso) {
+    return (
+      <>
+        <DialogHeader>
+          <DialogTitle>{sucesso.titulo}</DialogTitle>
+          <DialogDescription role="status">{sucesso.mensagem}</DialogDescription>
+        </DialogHeader>
+        <div className="flex justify-end">
+          <DialogClose asChild>
+            <Button variant="outline" size="sm">
+              Fechar
+            </Button>
+          </DialogClose>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <DialogHeader>
+        <DialogTitle>Participe</DialogTitle>
+        <DialogDescription>
+          Escolha como quer participar e deixe seu contato. A equipe do Instituto responde por
+          e-mail ou WhatsApp.
+        </DialogDescription>
+      </DialogHeader>
+
+      <fieldset>
+        <legend className="sr-only">Como você quer participar?</legend>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {caminhos.map((c) => {
+            const ativo = caminho === c.value;
+            return (
+              <label
+                key={c.value}
+                className={cn(
+                  "flex cursor-pointer flex-col gap-1.5 border p-4 transition-colors sm:p-5",
+                  "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring",
+                  ativo ? "border-foreground" : "border-input hover:border-foreground",
+                )}
+              >
+                <input
+                  type="radio"
+                  name={`${id}-caminho`}
+                  value={c.value}
+                  checked={ativo}
+                  onChange={() => setCaminho(c.value)}
+                  className="sr-only"
+                />
+                <span className="flex items-start justify-between gap-4">
+                  <span className="font-display text-[1.25rem]/[1.15]">{c.titulo}</span>
+                  {/* Marcador de seleção: o quadrado vermelho da marca quando escolhido. */}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "mt-1 size-3.5 shrink-0 border transition-colors",
+                      ativo ? "border-brand bg-brand" : "border-input",
+                    )}
+                  />
+                </span>
+                <span className="text-sm text-muted-foreground">{c.descricao}</span>
+              </label>
+            );
+          })}
+        </div>
+      </fieldset>
+
+      {/* Os dois formulários ficam montados: trocar de caminho não apaga o que foi digitado. */}
+      <div hidden={caminho !== "conteudo"}>
+        <ConteudoForm state={contato} action={enviarContato} pending={enviandoContato} />
+      </div>
+      <div hidden={caminho !== "artista"}>
+        <p className="mb-6 text-sm text-muted-foreground">
+          A curadoria avalia cada inscrição, e nenhuma obra vai ao ar sem a sua autorização por
+          escrito.{" "}
+          <Link
+            href={sections.muralChamada.href}
+            className="underline underline-offset-2 hover:text-foreground"
+          >
+            Leia a chamada aberta e o nosso compromisso
+          </Link>
+          .
+        </p>
+        <ChamadaFields
+          compact
+          state={inscricao}
+          action={enviarInscricao}
+          pending={enviandoInscricao}
+        />
+      </div>
+    </>
+  );
+}
+
+function ConteudoForm({
+  state,
+  action,
+  pending,
+}: {
+  state: InteresseState;
+  action: (data: FormData) => void;
+  pending: boolean;
+}) {
   const id = useId();
   const erros = state.status === "error" ? state.fieldErrors : undefined;
   const valores = state.status === "error" ? state.values : undefined;
@@ -86,34 +238,8 @@ function JoinForm() {
       </p>
     ) : null;
 
-  if (state.status === "success") {
-    return (
-      <>
-        <DialogHeader>
-          <DialogTitle>Contato enviado</DialogTitle>
-          <DialogDescription role="status">{state.message}</DialogDescription>
-        </DialogHeader>
-        <div className="flex justify-end">
-          <DialogClose asChild>
-            <Button variant="outline" size="sm">
-              Fechar
-            </Button>
-          </DialogClose>
-        </div>
-      </>
-    );
-  }
-
   return (
     <>
-      <DialogHeader>
-        <DialogTitle>Faça parte</DialogTitle>
-        <DialogDescription>
-          Para quem quer criar e desenvolver conteúdo com o Instituto: artigos, verbetes, resenhas e
-          trilhas de estudo. Deixe seu contato e a equipe editorial fala com você.
-        </DialogDescription>
-      </DialogHeader>
-
       {/* Com JavaScript, o envio não reinicia o formulário: o que foi digitado e
           escolhido continua lá se houver erro. Sem JavaScript, vale o action. */}
       <form

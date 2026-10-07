@@ -23,7 +23,21 @@ export interface MegaMenuItem {
   href?: string;
   groups: NavGroup[];
   /** Bloco de chamada à direita do mega menu. */
-  feature?: { title: string; text: string; href: string; cta: string };
+  feature?: {
+    title: string;
+    text: string;
+    href: string;
+    cta: string;
+    /** Imagem do destaque (ex.: obra da Capa do mês), com crédito. */
+    image?: {
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      blurDataURL: string;
+      credit: string;
+    };
+  };
 }
 
 /** Todas as seções do site. Footer, menu mobile e páginas provisórias leem daqui. */
@@ -86,10 +100,25 @@ export const sections = {
     description: "Correntes em diálogo, polêmicas e críticas.",
     soon: true,
   },
-  cultura: {
-    label: "Cultura",
-    href: "/cultura",
-    description: "Cinema, música, literatura e artes visuais.",
+  mural: {
+    label: "Mural",
+    href: "/mural",
+    description: "Arte e cultura latino-americana: artistas vivos, exposições e clássicos.",
+  },
+  muralArtistas: {
+    label: "Artistas",
+    href: "/mural/artistas",
+    description: "Perfis de quem faz arte política e popular hoje.",
+  },
+  muralObras: {
+    label: "Obras",
+    href: "/mural/obras",
+    description: "Todas as obras do Mural: dos artistas, para baixar e clássicos.",
+  },
+  muralChamada: {
+    label: "Chamada aberta",
+    href: "/mural/chamada-aberta",
+    description: "Como participar do Mural.",
   },
   podcast: {
     label: "Podcast e vídeos",
@@ -149,12 +178,16 @@ export const siteMap: NavGroup[] = semEmBreve([
       sections.trilhas,
       sections.glossario,
       sections.linhaDoTempo,
-      sections.cultura,
       sections.mapa,
       sections.debates,
       sections.podcast,
       sections.agenda,
     ],
+  },
+  {
+    title: "Mural",
+    href: sections.mural.href,
+    links: [sections.muralArtistas, sections.muralObras, sections.muralChamada],
   },
   {
     title: "Instituto",
@@ -168,5 +201,6 @@ export const bottomNav = [
   { key: "inicio", label: "Início", href: "/" },
   { key: "leituras", label: "Leituras", href: sections.leituras.href },
   { key: "trilhas", label: "Trilhas", href: sections.trilhas.href },
+  { key: "mural", label: "Mural", href: sections.mural.href },
   { key: "busca", label: "Busca", href: sections.busca.href },
 ] as const;

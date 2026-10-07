@@ -11,7 +11,6 @@ const enquantoIsso: Partial<Record<SectionKey, SectionKey[]>> = {
   acervo: ["biblioteca", "autores", "trilhas"],
   mapa: ["autores", "glossario", "linhaDoTempo"],
   debates: ["artigos", "glossario", "biblioteca"],
-  cultura: ["artigos", "biblioteca", "linhaDoTempo"],
   podcast: ["artigos", "trilhas", "biblioteca"],
   agenda: ["trilhas", "artigos", "biblioteca"],
   publique: ["artigos", "sobre", "biblioteca"],

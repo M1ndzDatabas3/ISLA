@@ -7,12 +7,12 @@ import { labelOf } from "@/lib/taxonomy";
 import { TimelineTrack } from "./timeline-track";
 
 /** Prévia da linha do tempo: sete marcos, do Manifesto ao MST. */
-export function TimelinePreview() {
+export function TimelinePreview({ divider = true }: { divider?: boolean }) {
   const marcos = getMarcos().slice(0, 7);
   if (marcos.length < 3) return null;
 
   return (
-    <Section tone="paper" divider>
+    <Section tone="paper" divider={divider}>
       <SectionHeading
         title="Linha do tempo"
         description="Revoluções, fundações e rupturas, com atenção ao que aconteceu na América Latina."

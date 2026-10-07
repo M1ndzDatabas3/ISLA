@@ -1,0 +1,15 @@
+titulo: "Ladeiras"
+artista: taller-cerro-rojo
+ano: 2024
+linguagem: fotografia
+tecnica: "Fotografia em retícula, impressão em jato de tinta"
+dimensoes: "60 × 40 cm"
+imagens:
+  - src: "/mural/taller-cerro-rojo/ladeiras/principal.jpg"
+    alt: "Imagem horizontal em retícula de pontos pretos sobre fundo claro, formando um céu claro e morros escuros ondulados, com um pequeno retângulo vermelho no alto de um morro."
+descricao: "Obra fictícia de demonstração. Os morros do porto vistos como um tecido de pontos, onde uma única janela vermelha chama o olhar."
+temas: ["cidade", "memoria"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+publicadoEm: "2026-09-10"
+demo: true

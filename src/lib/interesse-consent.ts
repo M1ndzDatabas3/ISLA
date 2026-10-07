@@ -1,4 +1,4 @@
-/** Formulário "Faça parte": texto de consentimento e estado (compartilhados com o cliente). */
+/** Formulário "Participe" (produção de conteúdo): texto de consentimento e estado (compartilhados com o cliente). */
 
 /** Texto exato que a pessoa autoriza. Mude a versão sempre que mudar o texto. */
 export const consentimentoInteresse = {

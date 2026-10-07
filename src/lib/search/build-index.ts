@@ -8,6 +8,7 @@ import {
   nomesDosAutores,
 } from "@/lib/content";
 import { joinNames } from "@/lib/content/summaries";
+import { getArtista, getArtistas, getClassicos, getObras, localDoArtista } from "@/lib/mural";
 import { sections } from "@/lib/navigation";
 import { labelOf } from "@/lib/taxonomy";
 
@@ -95,6 +96,36 @@ export function buildSearchDocs(): SearchDoc[] {
       subtitle: `${m.ano}, ${labelOf("regiao", m.regiao)}`,
       href: `${sections.linhaDoTempo.href}#${m.slug}`,
       keywords: [String(m.ano), m.resumo].join(" "),
+    });
+  }
+  for (const a of getArtistas()) {
+    docs.push({
+      id: `artista:${a.slug}`,
+      type: "artista",
+      title: a.nome,
+      subtitle: localDoArtista(a),
+      href: `/mural/artistas/${a.slug}`,
+      keywords: [a.bioCurta, ...a.linguagens.map((l) => labelOf("linguagem", l))].join(" "),
+    });
+  }
+  for (const o of getObras()) {
+    docs.push({
+      id: `obra:${o.slug}`,
+      type: "obra",
+      title: o.titulo,
+      subtitle: `${getArtista(o.artista)?.nome ?? ""}, ${o.ano}`,
+      href: `/mural/obras/${o.slug}`,
+      keywords: [o.descricao, o.tecnica].join(" "),
+    });
+  }
+  for (const c of getClassicos()) {
+    docs.push({
+      id: `classico:${c.slug}`,
+      type: "classico",
+      title: c.titulo,
+      subtitle: `${c.autoria}, ${c.ano}`,
+      href: `/mural/classicos/${c.slug}`,
+      keywords: c.sinopse,
     });
   }
   for (const s of Object.values(sections).filter((s) => !("soon" in s && s.soon))) {

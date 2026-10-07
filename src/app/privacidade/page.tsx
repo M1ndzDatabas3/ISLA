@@ -48,7 +48,7 @@ export default function PrivacidadePage() {
             <li>Sem a sua escolha, vale a opção mais privada: nada opcional é carregado.</li>
             <li>A medição de audiência só funciona se você permitir, e não usa cookies.</li>
             <li>
-              Seu e-mail só entra na newsletter ou no Faça parte com autorização expressa, e sai
+              Seu e-mail só entra na newsletter ou no Participe com autorização expressa, e sai
               quando você pedir.
             </li>
           </ul>
@@ -94,17 +94,31 @@ export default function PrivacidadePage() {
             contratado <ConferirMark />.
           </p>
 
-          <h2 id="faca-parte">Faça parte</h2>
+          <h2 id="faca-parte">Participe: produção de conteúdo</h2>
           <p>
-            O formulário Faça parte é para quem quer criar e desenvolver conteúdo com o Instituto.
-            Nele tratamos nome, e-mail, WhatsApp, estado e cidade, a mensagem (opcional) e o
-            registro do consentimento. O texto atual (versão {consentimentoInteresse.versao}) é: “
-            {consentimentoInteresse.texto}”
+            O formulário Participe tem dois caminhos. No de produção de conteúdo, para quem quer
+            criar e desenvolver conteúdo com o Instituto, tratamos nome, e-mail, WhatsApp, estado e
+            cidade, a mensagem (opcional) e o registro do consentimento. O texto atual (versão{" "}
+            {consentimentoInteresse.versao}) é: “{consentimentoInteresse.texto}”
           </p>
           <p>
             Esses dados servem só para a equipe editorial falar com você sobre produção de conteúdo.
             Não são publicados nem repassados. Ficam guardados por até dois anos sem novo contato,
             ou até você pedir a exclusão, o que vier primeiro.
+          </p>
+
+          <h2 id="mural">Chamada aberta do Mural Cultural</h2>
+          <p>
+            Na inscrição da chamada aberta (na página da chamada ou no caminho de artista do
+            Participe), tratamos nome artístico, e-mail, WhatsApp (opcional), estado e cidade,
+            linguagens, links do portfólio, o texto sobre o trabalho e o registro do consentimento.
+            Os dados servem só para avaliar a inscrição e falar com o artista sobre ela. Ficam
+            guardados por até dois anos sem novo contato, ou até a pessoa pedir a exclusão.
+          </p>
+          <p>
+            Artistas selecionados só têm perfil e obras publicados depois de uma autorização por
+            escrito, com data e escopo do uso. Cada artista escolhe a licença das próprias obras e
+            pode pedir a retirada a qualquer momento.
           </p>
 
           <h2 id="direitos">Seus direitos</h2>

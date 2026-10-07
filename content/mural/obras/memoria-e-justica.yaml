@@ -1,0 +1,21 @@
+titulo: "Memória e justiça"
+artista: taller-cerro-rojo
+ano: 2025
+linguagem: cartaz-e-design
+tecnica: "Cartaz, impressão digital"
+dimensoes: "A3 (29,7 × 42 cm)"
+imagens:
+  - src: "/mural/taller-cerro-rojo/memoria-e-justica/principal.jpg"
+    alt: "Cartaz claro com uma faixa vermelha diagonal, um círculo preto e as palavras MEMÓRIA E JUSTIÇA em letras pretas grandes."
+descricao: "Obra fictícia de demonstração. Cartaz para atos de memória das vítimas das ditaduras latino-americanas."
+temas: ["memoria", "imperialismo"]
+licenca: cc-by-nc
+permiteDownload: true
+arquivoParaDownload: "/mural/taller-cerro-rojo/memoria-e-justica/alta.jpg"
+impressao:
+  formato: "A3, papel sulfite 90 g ou superior"
+textosRelacionados:
+  - tipo: verbete
+    slug: imperialismo
+publicadoEm: "2026-09-11"
+demo: true

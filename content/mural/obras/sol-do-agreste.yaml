@@ -1,0 +1,15 @@
+titulo: "Sol do agreste"
+artista: coletivo-terra-riscada
+ano: 2023
+linguagem: artes-visuais
+tecnica: "Xilogravura sobre papel"
+dimensoes: "40 × 40 cm"
+imagens:
+  - src: "/mural/coletivo-terra-riscada/sol-do-agreste/principal.jpg"
+    alt: "Gravura quadrada com fundo preto e um grande disco vermelho atravessado por anéis concêntricos claros, sobre uma faixa preta no rodapé."
+descricao: "Obra fictícia de demonstração. O calor do agreste vira um alvo de anéis, como se a seca mirasse a terra."
+temas: ["terra", "memoria"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+publicadoEm: "2026-09-20"
+demo: true

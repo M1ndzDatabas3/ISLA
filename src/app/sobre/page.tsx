@@ -101,13 +101,28 @@ export default function SobrePage() {
                 Artigos, verbetes, resenhas e trilhas são feitos com quem estuda e pesquisa. Deixe
                 seu contato e a equipe editorial fala com você.
               </p>
-              <JoinDialog>
+              <JoinDialog caminho="conteudo">
                 <button
                   type="button"
                   className="link-underline mt-4 cursor-pointer text-sm font-medium"
                 >
                   Faça parte
                 </button>
+              </JoinDialog>
+            </div>
+            <div>
+              <h3 className="font-display text-h3">Expor no Mural</h3>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                Artistas podem se inscrever na chamada aberta do Mural Cultural. A curadoria avalia
+                cada inscrição, e nenhuma obra vai ao ar sem autorização por escrito.
+              </p>
+              <JoinDialog caminho="artista">
+                <a
+                  href={sections.muralChamada.href}
+                  className="link-underline mt-4 inline-block text-sm font-medium"
+                >
+                  Inscrever meu trabalho
+                </a>
               </JoinDialog>
             </div>
             <div>

@@ -1,0 +1,25 @@
+titulo: "Memória preta"
+artista: mare-vermelha
+ano: 2025
+linguagem: cartaz-e-design
+tecnica: "Cartaz, impressão digital"
+dimensoes: "A3 (29,7 × 42 cm)"
+imagens:
+  - src: "/mural/mare-vermelha/memoria-preta/principal.jpg"
+    alt: "Cartaz preto com uma faixa vermelha diagonal, um círculo claro e as palavras MEMÓRIA PRETA em letras claras grandes."
+descricao: "Obra fictícia de demonstração. Um cartaz para atos do 20 de novembro, feito para circular livremente."
+temas: ["raca", "memoria"]
+licenca: cc-by-nc-sa
+permiteDownload: true
+arquivoParaDownload: "/mural/mare-vermelha/memoria-preta/alta.jpg"
+impressao:
+  formato: "A3, papel sulfite 90 g ou superior"
+textosRelacionados:
+  - tipo: artigo
+    slug: lelia-gonzalez-amefricanidade
+  - tipo: verbete
+    slug: quilombagem
+  - tipo: trilha
+    slug: raca-classe-genero-brasil
+publicadoEm: "2026-09-30"
+demo: true

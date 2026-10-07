@@ -1,0 +1,21 @@
+titulo: "Turno da noite"
+artista: oficina-chao-de-fabrica
+ano: 2024
+linguagem: artes-visuais
+tecnica: "Acrílica sobre muro"
+dimensoes: "4 × 2 m"
+imagens:
+  - src: "/mural/oficina-chao-de-fabrica/turno-da-noite/principal.jpg"
+    alt: "Mural horizontal noturno: silhuetas pretas de galpões e chaminés com fileiras de janelas vermelhas, uma lua ocre no céu cinza escuro e uma faixa vermelha na base."
+descricao: "Obra fictícia de demonstração. Pintado na fachada de um sindicato, o mural homenageia quem vira a noite na linha de produção."
+comentarioCuratorial: "A faixa vermelha na base funciona como rodapé e como chão de fábrica."
+temas: ["trabalho", "memoria"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+textosRelacionados:
+  - tipo: verbete
+    slug: forca-de-trabalho
+  - tipo: trilha
+    slug: primeiros-passos
+publicadoEm: "2026-10-02"
+demo: true

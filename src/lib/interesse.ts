@@ -1,9 +1,11 @@
 /**
- * "Faça parte": contatos de quem quer criar e desenvolver conteúdo no site.
- * O destino definitivo (Supabase, na fase 4) entra depois; até lá, o provisório
- * só aceita envios em desenvolvimento e não guarda nada.
+ * "Participe", caminho de produção de conteúdo: contatos de quem quer criar e
+ * desenvolver conteúdo no site. O destino definitivo (Supabase, na fase 4) entra
+ * depois; até lá, os contatos vão para um webhook configurável.
  */
 import { z } from "zod";
+
+import { enviarParaWebhook } from "./forms/webhook";
 
 import { siglasUF } from "./estados";
 import { digitosWhatsapp } from "./interesse-consent";
@@ -46,15 +48,23 @@ export interface InteresseProvider {
   save(interesse: Interesse): Promise<ResultadoInteresse>;
 }
 
-/** Destino provisório: aceita em desenvolvimento (sem gravar) e recusa em produção. */
-const provisorio: InteresseProvider = {
+/**
+ * Destino: CONTEUDO_CONTATOS_WEBHOOK_URL (POST com JSON). Sem ele, aceita em
+ * desenvolvimento sem gravar nada e recusa em produção.
+ */
+const viaWebhook: InteresseProvider = {
   async save(interesse) {
+    const url = process.env.CONTEUDO_CONTATOS_WEBHOOK_URL;
+    if (url) {
+      const ok = await enviarParaWebhook(url, { tipo: "contato-conteudo", ...interesse });
+      return ok ? { ok: true } : { ok: false, motivo: "falha" };
+    }
     if (process.env.NODE_ENV === "production") return { ok: false, motivo: "indisponivel" };
     console.info(
-      `[faça parte] contato de teste: ${interesse.cidade}/${interesse.uf}, consentimento ${interesse.consentimentoRegistro.versao}`,
+      `[participe] contato de teste: ${interesse.cidade}/${interesse.uf}, consentimento ${interesse.consentimentoRegistro.versao}`,
     );
     return { ok: true, teste: true };
   },
 };
 
-export const interesseProvider: InteresseProvider = provisorio;
+export const interesseProvider: InteresseProvider = viaWebhook;

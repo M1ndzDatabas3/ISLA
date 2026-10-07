@@ -1,0 +1,15 @@
+titulo: "Feira"
+artista: coletivo-terra-riscada
+ano: 2025
+linguagem: artes-visuais
+tecnica: "Xilogravura colorida sobre papel"
+dimensoes: "60 × 40 cm"
+imagens:
+  - src: "/mural/coletivo-terra-riscada/feira/principal.jpg"
+    alt: "Gravura horizontal com uma fileira de barracas triangulares em vermelho, preto e ocre, emoldurada por bordas em zigue-zague no alto e embaixo."
+descricao: "Obra fictícia de demonstração. A feira como praça pública: lugar de troca, conversa e notícia."
+temas: ["trabalho", "cidade"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+publicadoEm: "2026-09-21"
+demo: true

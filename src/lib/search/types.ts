@@ -1,7 +1,17 @@
 /** Contrato da busca. A implementação atual usa Fuse.js no navegador; trocar por
  * Meilisearch ou Pagefind significa só reimplementar `SearchProvider`. */
 
-export type SearchDocType = "artigo" | "livro" | "autor" | "verbete" | "trilha" | "marco" | "secao";
+export type SearchDocType =
+  | "artigo"
+  | "livro"
+  | "autor"
+  | "verbete"
+  | "trilha"
+  | "marco"
+  | "artista"
+  | "obra"
+  | "classico"
+  | "secao";
 
 export interface SearchDoc {
   id: string;
@@ -31,5 +41,8 @@ export const typeLabels: Record<SearchDocType, { singular: string; plural: strin
   verbete: { singular: "Verbete", plural: "Verbetes" },
   trilha: { singular: "Trilha", plural: "Trilhas" },
   marco: { singular: "Marco histórico", plural: "Linha do tempo" },
+  artista: { singular: "Artista", plural: "Artistas do Mural" },
+  obra: { singular: "Obra", plural: "Obras do Mural" },
+  classico: { singular: "Clássico", plural: "Clássicos" },
   secao: { singular: "Seção", plural: "Seções do site" },
 };

@@ -8,6 +8,7 @@ import {
   categoriasDeLivros,
   type GrupoDeCategorias,
 } from "@/lib/content/facets";
+import { getCapaDoMes } from "@/lib/mural";
 import { sections, semEmBreve, type MegaMenuItem, type NavGroup } from "@/lib/navigation";
 
 const paraGrupo = (g: GrupoDeCategorias, span?: 1 | 2): NavGroup => ({
@@ -17,6 +18,7 @@ const paraGrupo = (g: GrupoDeCategorias, span?: 1 | 2): NavGroup => ({
 });
 
 export function buildMegaMenu(): MegaMenuItem[] {
+  const capa = getCapaDoMes();
   const artigos = categoriasDeArtigos().filter((g) => g.key !== "nivel");
   const livros = categoriasDeLivros();
   const livrosPor = (key: string) => livros.find((g) => g.key === key);
@@ -59,7 +61,6 @@ export function buildMegaMenu(): MegaMenuItem[] {
           title: "História e cultura",
           links: [
             sections.linhaDoTempo,
-            sections.cultura,
             sections.mapa,
             sections.debates,
             sections.podcast,
@@ -73,6 +74,38 @@ export function buildMegaMenu(): MegaMenuItem[] {
         href: sections.linhaDoTempo.href,
         cta: "Percorrer a linha do tempo",
       },
+    },
+    {
+      label: "Mural",
+      href: sections.mural.href,
+      groups: [
+        {
+          title: "Mural Cultural",
+          links: [sections.muralArtistas, sections.muralObras, sections.muralChamada],
+          span: 2,
+        },
+      ],
+      feature: capa
+        ? {
+            title: "Capa do mês",
+            text: `${capa.obra.titulo}, de ${capa.artista.nome}.`,
+            href: `/mural/obras/${capa.obra.slug}`,
+            cta: "Ver a obra",
+            image: {
+              src: capa.obra.imagens[0]!.src,
+              alt: capa.obra.imagens[0]!.alt,
+              width: capa.obra.imagens[0]!.largura,
+              height: capa.obra.imagens[0]!.altura,
+              blurDataURL: capa.obra.imagens[0]!.blurDataURL,
+              credit: capa.artista.nome,
+            },
+          }
+        : {
+            title: "Chamada aberta",
+            text: "O Mural está recebendo inscrições de artistas que fazem arte política e popular.",
+            href: sections.muralChamada.href,
+            cta: "Como participar",
+          },
     },
     {
       label: "Instituto",

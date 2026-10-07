@@ -1,0 +1,18 @@
+titulo: "1º de maio"
+artista: oficina-chao-de-fabrica
+ano: 2026
+linguagem: cartaz-e-design
+tecnica: "Cartaz, impressão digital"
+dimensoes: "A3 (29,7 × 42 cm)"
+imagens:
+  - src: "/mural/oficina-chao-de-fabrica/primeiro-de-maio/principal.jpg"
+    alt: "Cartaz ocre com uma faixa preta diagonal no alto e o texto 1º DE MAIO em letras pretas grandes."
+descricao: "Obra fictícia de demonstração. Cartaz para o Dia do Trabalhador, liberado com crédito para qualquer uso."
+temas: ["trabalho", "memoria"]
+licenca: cc-by
+permiteDownload: true
+arquivoParaDownload: "/mural/oficina-chao-de-fabrica/primeiro-de-maio/alta.jpg"
+impressao:
+  formato: "A3 ou A2, papel sulfite 90 g ou superior"
+publicadoEm: "2026-10-03"
+demo: true

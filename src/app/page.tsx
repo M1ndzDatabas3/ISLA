@@ -1,9 +1,9 @@
 import type { Organization, WebSite } from "schema-dts";
 
-import { CulturePodcast } from "@/components/home/culture-podcast";
 import { FeaturedArticles } from "@/components/home/featured-articles";
 import { Hero } from "@/components/home/hero";
 import { LibraryHighlight } from "@/components/home/library-highlight";
+import { MuralSection } from "@/components/home/mural-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { QuoteMarquee } from "@/components/home/quote-marquee";
 import { FeaturedQuote } from "@/components/home/featured-quote";
@@ -45,8 +45,8 @@ export default function HomePage() {
       <QuoteMarquee />
       <TrilhasRail />
       <LibraryHighlight />
-      <TimelinePreview />
-      <CulturePodcast />
+      <MuralSection />
+      <TimelinePreview divider={false} />
       <NewsletterSection />
     </>
   );

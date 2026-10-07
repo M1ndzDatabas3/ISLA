@@ -1,0 +1,17 @@
+titulo: "Margens"
+artista: lua-cabocla
+ano: 2026
+linguagem: ilustracao-e-quadrinhos
+tecnica: "Quadrinho, página única, nanquim e cor digital"
+imagens:
+  - src: "/mural/lua-cabocla/margens/principal.jpg"
+    alt: "Página de quadrinho com cinco requadros de bordas pretas: um sol ocre sobre faixa escura, uma figura em silhueta, um balão de fala vazio, um triângulo vermelho e um círculo preto."
+descricao: "Obra fictícia de demonstração. Uma página muda, em que os requadros contam uma travessia sem palavras."
+temas: ["genero", "terra"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+textosRelacionados:
+  - tipo: verbete
+    slug: reproducao-social
+publicadoEm: "2026-09-01"
+demo: true

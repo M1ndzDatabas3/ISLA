@@ -1,0 +1,14 @@
+titulo: "Rio adentro"
+artista: lua-cabocla
+ano: 2025
+linguagem: ilustracao-e-quadrinhos
+tecnica: "Ilustração digital"
+imagens:
+  - src: "/mural/lua-cabocla/rio-adentro/principal.jpg"
+    alt: "Ilustração vertical em fundo claro: um barco vermelho com mastro preto navega sobre linhas pretas onduladas que formam o rio, sob um grande sol ocre."
+descricao: "Obra fictícia de demonstração. O rio como estrada de quem vive nas margens."
+temas: ["terra", "memoria"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+publicadoEm: "2026-08-30"
+demo: true

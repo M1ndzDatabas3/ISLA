@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getArtigos, getAutores, getConceitos, getLivros } from "@/lib/content";
+import { getArtistas, getClassicos, getExposicoes, getObras } from "@/lib/mural";
 import { sections } from "@/lib/navigation";
 import { siteConfig } from "@/site.config";
 
@@ -32,6 +33,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...getConceitos().map((c) => ({
       url: url(`/glossario/${c.slug}`),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    ...getArtistas().map((a) => ({
+      url: url(`/mural/artistas/${a.slug}`),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    ...getObras().map((o) => ({
+      url: url(`/mural/obras/${o.slug}`),
+      lastModified: o.publicadoEm,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    ...getExposicoes().map((e) => ({
+      url: url(`/mural/exposicoes/${e.slug}`),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    ...getClassicos().map((c) => ({
+      url: url(`/mural/classicos/${c.slug}`),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

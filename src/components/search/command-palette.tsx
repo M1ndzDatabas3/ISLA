@@ -4,11 +4,14 @@ import { Command } from "cmdk";
 import {
   ArrowRight,
   BookOpen,
+  Clapperboard,
+  Frame,
   FileText,
   Hash,
   History,
   LayoutGrid,
   Loader2,
+  Palette,
   Route,
   Search,
   User,
@@ -22,7 +25,18 @@ import { sections } from "@/lib/navigation";
 import { loadSearchProvider } from "@/lib/search/fuse-provider";
 import { typeLabels, type SearchDocType, type SearchResult } from "@/lib/search/types";
 
-const ordem: SearchDocType[] = ["artigo", "livro", "autor", "verbete", "trilha", "marco", "secao"];
+const ordem: SearchDocType[] = [
+  "artigo",
+  "livro",
+  "autor",
+  "verbete",
+  "trilha",
+  "marco",
+  "artista",
+  "obra",
+  "classico",
+  "secao",
+];
 const icones: Record<SearchDocType, typeof FileText> = {
   artigo: FileText,
   livro: BookOpen,
@@ -30,6 +44,9 @@ const icones: Record<SearchDocType, typeof FileText> = {
   verbete: Hash,
   trilha: Route,
   marco: History,
+  artista: Palette,
+  obra: Frame,
+  classico: Clapperboard,
   secao: LayoutGrid,
 };
 

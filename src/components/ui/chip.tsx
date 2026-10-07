@@ -14,7 +14,7 @@ const chipVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-hair bg-transparent text-foreground hover:border-foreground aria-pressed:border-foreground aria-pressed:bg-foreground aria-pressed:text-background",
+          "border-hair bg-transparent text-foreground hover:border-foreground aria-pressed:border-foreground aria-pressed:bg-foreground aria-pressed:text-background aria-[current=page]:border-foreground aria-[current=page]:bg-foreground aria-[current=page]:text-background",
         solid:
           "border-foreground bg-foreground text-background hover:border-brand hover:bg-brand hover:text-brand-foreground",
       },

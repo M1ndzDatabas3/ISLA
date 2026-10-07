@@ -1,0 +1,22 @@
+titulo: "Greve geral"
+artista: mare-vermelha
+ano: 2026
+linguagem: cartaz-e-design
+tecnica: "Cartaz, impressão digital"
+dimensoes: "A3 (29,7 × 42 cm)"
+imagens:
+  - src: "/mural/mare-vermelha/greve-geral/principal.jpg"
+    alt: "Cartaz vermelho com uma faixa preta diagonal, um círculo branco no alto e as palavras GREVE GERAL em letras brancas grandes."
+descricao: "Obra fictícia de demonstração. Cartaz pensado para ser colado em série, lido de longe e reimpresso por qualquer coletivo."
+temas: ["trabalho", "cidade"]
+licenca: cc-by-nc-sa
+permiteDownload: true
+arquivoParaDownload: "/mural/mare-vermelha/greve-geral/alta.jpg"
+impressao:
+  formato: "A3 ou A2, papel sulfite 90 g ou superior"
+  observacao: "Imprima sem margem; mantenha o crédito do ateliê no rodapé."
+textosRelacionados:
+  - tipo: artigo
+    slug: o-que-e-mais-valia
+publicadoEm: "2026-09-28"
+demo: true

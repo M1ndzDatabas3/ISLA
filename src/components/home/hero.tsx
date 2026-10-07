@@ -20,7 +20,7 @@ const entries = [
   },
   {
     label: "Faça parte",
-    description: "Crie e desenvolva conteúdo com o Instituto. Deixe seu contato.",
+    description: "Produza conteúdo com o Instituto ou mostre sua obra no Mural Cultural.",
   },
 ];
 
@@ -79,9 +79,11 @@ export function Hero() {
             className="mt-8 flex animate-fade-up flex-wrap items-center gap-x-7 gap-y-4"
             style={{ animationDelay: "560ms" }}
           >
-            <Button asChild>
-              <Link href={sections.trilhas.href}>Comece a estudar</Link>
-            </Button>
+            <JoinDialog>
+              <Button asChild>
+                <a href={`${sections.sobre.href}#participar`}>Participe!</a>
+              </Button>
+            </JoinDialog>
             <Button asChild variant="link">
               <Link href={sections.biblioteca.href}>Explore a biblioteca</Link>
             </Button>

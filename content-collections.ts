@@ -9,6 +9,14 @@ import GithubSlugger from "github-slugger";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 
+import {
+  artistas,
+  capas,
+  classicos,
+  exposicoes,
+  muralTextos,
+  obras,
+} from "./content-collections.mural";
 import rehypeConferir from "./src/lib/mdx/rehype-conferir";
 import rehypeTypography from "./src/lib/mdx/rehype-typography";
 import { z } from "zod";
@@ -289,23 +297,6 @@ const episodios = defineCollection({
   transform: (doc) => ({ ...doc, slug: doc._meta.path }),
 });
 
-const obrasCulturais = defineCollection({
-  name: "obrasCulturais",
-  directory: "content/cultura",
-  include: "*.yaml",
-  parser: "yaml",
-  schema: z.object({
-    titulo: z.string(),
-    tipo: z.enum(["filme", "musica", "literatura", "artes-visuais"]),
-    autoria: z.string(),
-    ano: z.number().int(),
-    pais: z.string(),
-    resumo: z.string(),
-    conferir: z.string().optional(),
-  }),
-  transform: (doc) => ({ ...doc, slug: doc._meta.path }),
-});
-
 export default defineConfig({
   content: [
     autores,
@@ -317,6 +308,11 @@ export default defineConfig({
     citacoes,
     eventos,
     episodios,
-    obrasCulturais,
+    artistas,
+    obras,
+    exposicoes,
+    classicos,
+    capas,
+    muralTextos,
   ],
 });

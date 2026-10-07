@@ -1,0 +1,20 @@
+titulo: "Engrenagem"
+artista: oficina-chao-de-fabrica
+ano: 2023
+linguagem: artes-visuais
+tecnica: "Linoleogravura sobre papel"
+dimensoes: "40 × 40 cm"
+imagens:
+  - src: "/mural/oficina-chao-de-fabrica/engrenagem/principal.jpg"
+    alt: "Gravura quadrada com fundo vermelho e uma grande engrenagem preta de dezesseis dentes, com o centro claro."
+descricao: "Obra fictícia de demonstração. A engrenagem como imagem da produção e da força coletiva que a move."
+temas: ["trabalho"]
+licenca: todos-os-direitos-reservados
+permiteDownload: false
+textosRelacionados:
+  - tipo: verbete
+    slug: mais-valia
+disponivelParaVenda: true
+linkDeVenda: "https://example.org/loja"
+publicadoEm: "2026-10-02"
+demo: true

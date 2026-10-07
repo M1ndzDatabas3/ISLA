@@ -9,7 +9,18 @@ import { loadSearchProvider } from "@/lib/search/fuse-provider";
 import { typeLabels, type SearchDocType, type SearchResult } from "@/lib/search/types";
 import { cn } from "@/lib/utils";
 
-const tipos = ["todos", "artigo", "livro", "autor", "verbete", "trilha", "marco"] as const;
+const tipos = [
+  "todos",
+  "artigo",
+  "livro",
+  "autor",
+  "verbete",
+  "trilha",
+  "marco",
+  "artista",
+  "obra",
+  "classico",
+] as const;
 
 /** Página de busca: consulta e tipo na URL, resultados agrupados. */
 export function SearchPageView() {

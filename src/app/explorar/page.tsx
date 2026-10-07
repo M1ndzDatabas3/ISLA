@@ -2,31 +2,29 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { SectionHeading } from "@/components/editorial/section-heading";
-import { CulturePodcast } from "@/components/home/culture-podcast";
 import { TimelinePreview } from "@/components/home/timeline-preview";
 import { HubDoors, HubHeader, type HubDoor } from "@/components/hub/hub";
 import { Section } from "@/components/layout/section";
 import { LevelBadge } from "@/components/ui/level-badge";
-import { getConceitos, getMarcos, getObrasCulturais, getTrilhas } from "@/lib/content";
+import { getConceitos, getMarcos, getTrilhas } from "@/lib/content";
 import { sections } from "@/lib/navigation";
 import type { Nivel } from "@/lib/taxonomy";
 
 export const metadata: Metadata = {
   title: sections.explorar.label,
   description:
-    "Trilhas de estudo com etapas e perguntas, glossário de conceitos, linha do tempo das lutas socialistas e obras de cultura latino-americana.",
+    "Trilhas de estudo com etapas e perguntas, glossário de conceitos e linha do tempo das lutas socialistas.",
   alternates: { canonical: sections.explorar.href },
 };
 
 /** Primeira letra sem acento ("Á" → "A"), para agrupar o glossário. */
 const inicial = (termo: string) => termo.normalize("NFD").replace(/[̀-ͯ]/g, "")[0]!.toUpperCase();
 
-/** Página-mestre de Explorar: trilhas, glossário, linha do tempo e cultura. */
+/** Página-mestre de Explorar: trilhas, glossário e linha do tempo. */
 export default function ExplorarPage() {
   const trilhas = getTrilhas();
   const conceitos = getConceitos();
   const marcos = getMarcos();
-  const obras = getObrasCulturais();
 
   const porLetra = new Map<string, typeof conceitos>();
   for (const c of conceitos) {
@@ -55,12 +53,6 @@ export default function ExplorarPage() {
         "Revoluções, fundações e rupturas, com atenção ao que aconteceu na América Latina.",
       meta: `${marcos.length} marcos`,
     },
-    {
-      label: sections.cultura.label,
-      href: sections.cultura.href,
-      description: "Filmes, canções e romances que ajudam a entender a luta de classes.",
-      meta: `${obras.length} obras`,
-    },
   ];
 
   return (
@@ -68,7 +60,7 @@ export default function ExplorarPage() {
       <Section tone="paper" className="pt-[clamp(32px,5vw,64px)]">
         <HubHeader
           title="Explorar"
-          lead="Caminhos para estudar além da leitura: trilhas com etapas e perguntas, um glossário de conceitos, a linha do tempo das lutas e obras de cultura."
+          lead="Caminhos para estudar além da leitura: trilhas com etapas e perguntas, um glossário de conceitos e a linha do tempo das lutas."
           stats={[
             { valor: trilhas.length, rotulo: "trilhas de estudo", href: sections.trilhas.href },
             {
@@ -77,7 +69,6 @@ export default function ExplorarPage() {
               href: sections.glossario.href,
             },
             { valor: marcos.length, rotulo: "marcos históricos", href: sections.linhaDoTempo.href },
-            { valor: obras.length, rotulo: "obras de cultura", href: sections.cultura.href },
           ]}
         />
         <HubDoors doors={portas} className="mt-section" />
@@ -146,7 +137,6 @@ export default function ExplorarPage() {
       </Section>
 
       <TimelinePreview />
-      <CulturePodcast />
     </>
   );
 }

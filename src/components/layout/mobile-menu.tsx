@@ -6,6 +6,12 @@ import { Dialog as DialogPrimitive } from "radix-ui";
 import { useRef, useState } from "react";
 
 import { Logo } from "@/components/brand/Logo";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { LenisLock } from "@/components/ui/dialog";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 import { gsap, useGSAP } from "@/lib/gsap";
@@ -121,38 +127,44 @@ function MenuPanel({ onClose, onTimeline }: MenuPanelProps) {
               Buscar artigos, livros, autores…
             </Link>
 
-            <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
+            {/* Grupos em acordeão; o primeiro link de cada um leva à página-mestre. */}
+            <Accordion type="single" collapsible className="flex flex-col">
               {siteMap.map((group) => (
-                <div key={group.title}>
-                  <p data-item className="mb-2 font-sans text-meta text-muted-foreground">
-                    {group.href ? (
-                      <Link
-                        href={group.href}
-                        onClick={onClose}
-                        className="inline-flex min-h-6 items-center underline-offset-4 hover:text-foreground hover:underline"
-                      >
-                        {group.title}
-                      </Link>
-                    ) : (
-                      group.title
-                    )}
-                  </p>
-                  <ul className="flex flex-col">
-                    {group.links.map((link) => (
-                      <li key={link.href} data-item>
-                        <Link
-                          href={link.href}
-                          onClick={onClose}
-                          className="block border-b border-hair py-2.5 font-display text-[1.625rem] leading-tight font-medium transition-colors hover:text-brand-text"
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <AccordionItem key={group.title} value={group.title} data-item>
+                  <AccordionTrigger className="py-4 text-[1.75rem] leading-tight">
+                    {group.title}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="flex flex-col pb-4">
+                      {group.href ? (
+                        <li>
+                          <Link
+                            href={group.href}
+                            onClick={onClose}
+                            className="block py-2 text-[1.0625rem] font-medium transition-colors hover:text-brand-text"
+                          >
+                            Visão geral de {group.title}
+                          </Link>
+                        </li>
+                      ) : null}
+                      {group.links
+                        .filter((link) => link.href !== group.href)
+                        .map((link) => (
+                          <li key={link.href}>
+                            <Link
+                              href={link.href}
+                              onClick={onClose}
+                              className="block py-2 text-[1.0625rem] text-muted-foreground transition-colors hover:text-foreground"
+                            >
+                              {link.label}
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </nav>
 
           <div

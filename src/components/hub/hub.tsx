@@ -6,7 +6,7 @@
 import Link from "next/link";
 
 import { Counter } from "@/components/motion/counter";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { Breadcrumb, type BreadcrumbItem } from "@/components/ui/breadcrumb";
 import type { GrupoDeCategorias } from "@/lib/content/facets";
 import { cn } from "@/lib/utils";
 
@@ -20,14 +20,20 @@ export function HubHeader({
   title,
   lead,
   stats,
+  breadcrumb,
 }: {
   title: string;
   lead: string;
   stats?: HubStat[];
+  /** Trilha completa; sem ela, "Início / título". */
+  breadcrumb?: BreadcrumbItem[];
 }) {
   return (
     <>
-      <Breadcrumb items={[{ label: "Início", href: "/" }, { label: title }]} className="mb-12" />
+      <Breadcrumb
+        items={breadcrumb ?? [{ label: "Início", href: "/" }, { label: title }]}
+        className="mb-12"
+      />
       <div className="grid-page items-end gap-y-6">
         <h1 className="col-span-12 font-display text-[clamp(3rem,1.6rem+5.4vw,6.5rem)]/[0.95] tracking-[-0.03em] lg:col-span-7">
           {title}
