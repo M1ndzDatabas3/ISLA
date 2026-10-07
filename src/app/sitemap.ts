@@ -7,10 +7,10 @@ import { siteConfig } from "@/site.config";
 const url = (path: string) => `${siteConfig.url}${path === "/" ? "" : path}`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // A busca é noindex; as demais seções entram com prioridade média.
+  // A busca e as seções em preparação ("em breve") ficam fora dos buscadores.
   const secoes = Object.values(sections)
-    .map((s) => s.href)
-    .filter((href) => href !== sections.busca.href);
+    .filter((s) => s.href !== sections.busca.href && !("soon" in s && s.soon))
+    .map((s) => s.href);
 
   return [
     { url: url("/"), changeFrequency: "weekly", priority: 1 },

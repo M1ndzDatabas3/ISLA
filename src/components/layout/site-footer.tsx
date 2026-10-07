@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Logo } from "@/components/brand/Logo";
 import { CookiePreferencesButton } from "@/components/privacy/cookie-consent";
+import { SoonBadge } from "@/components/ui/soon-badge";
 import { sections, siteMap } from "@/lib/navigation";
 import { activeSocialLinks, siteConfig } from "@/site.config";
 
@@ -13,7 +14,7 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-hair bg-background">
-      <div className="container-page grid-page gap-y-12 pt-section pb-block">
+      <div className="container-page grid-page gap-y-12 pt-section pb-stack">
         <div className="col-span-12 flex flex-col gap-5 lg:col-span-4">
           <Link href="/" className="inline-flex self-start">
             <Logo className="text-[44px]" />
@@ -44,6 +45,7 @@ export function SiteFooter() {
                       className="block py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {link.label}
+                      {link.soon ? <SoonBadge className="ml-0 block translate-y-0 pt-0.5" /> : null}
                     </Link>
                   </li>
                 ))}

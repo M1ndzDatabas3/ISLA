@@ -32,7 +32,7 @@ export function LibraryHighlight() {
         action={{ label: "Abrir a biblioteca", href: sections.biblioteca.href }}
       />
 
-      <dl className="mb-block grid grid-cols-2 border-t border-hair lg:grid-cols-4">
+      <dl className="mb-stack grid grid-cols-2 border-t border-hair lg:grid-cols-4">
         {numeros.map((n, i) => (
           <div
             key={n.rotulo}

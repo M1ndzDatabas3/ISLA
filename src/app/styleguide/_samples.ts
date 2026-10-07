@@ -26,7 +26,7 @@ export const sampleArticles: ArticleCardData[] = [
   },
   {
     href: "/artigos",
-    titulo: "Caio Prado Jr. e o sentido da colonização",
+    titulo: "Caio Prado Júnior e o sentido da colonização",
     linhaFina: "Leitura guiada do capítulo de abertura de Formação do Brasil contemporâneo (1942).",
     autor: "Redação do Instituto",
     data: "2026-09-28",

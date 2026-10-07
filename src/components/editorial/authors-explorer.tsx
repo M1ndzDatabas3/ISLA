@@ -6,7 +6,7 @@ import { ActiveFilters, type ActiveFilter } from "@/components/filters/active-fi
 import { FacetPopover } from "@/components/filters/facet-popover";
 import { regioes, tradicoes } from "@/lib/taxonomy";
 
-import { AuthorCard, type AuthorCardData } from "./author-card";
+import { AuthorRow, type AuthorCardData } from "./author-card";
 
 export interface AuthorListItem extends AuthorCardData {
   slug: string;
@@ -82,9 +82,9 @@ export function AuthorsExplorer({ authors }: { authors: AuthorListItem[] }) {
           onClear={() => void setF({ tradicao: [], regiao: [] })}
         />
       </div>
-      <div className="grid grid-cols-2 gap-x-6 gap-y-12 pt-10 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-x-[clamp(16px,2vw,32px)] pt-stack md:grid-cols-2 lg:grid-cols-3">
         {visiveis.map((a) => (
-          <AuthorCard key={a.slug} author={a} />
+          <AuthorRow key={a.slug} author={a} />
         ))}
       </div>
     </div>

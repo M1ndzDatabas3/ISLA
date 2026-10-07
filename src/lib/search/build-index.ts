@@ -1,9 +1,23 @@
-import { getArtigos, getAutores, getConceitos, getLivros, nomesDosAutores } from "@/lib/content";
+import {
+  getArtigos,
+  getAutores,
+  getConceitos,
+  getLivros,
+  getMarcos,
+  getTrilhas,
+  nomesDosAutores,
+} from "@/lib/content";
 import { joinNames } from "@/lib/content/summaries";
 import { sections } from "@/lib/navigation";
 import { labelOf } from "@/lib/taxonomy";
 
 import type { SearchDoc } from "./types";
+
+/** Primeira frase (ou até ~90 caracteres) para a linha de apoio do resultado. */
+function resumo(texto: string) {
+  const frase = texto.split(/(?<=\.)\s/)[0] ?? texto;
+  return frase.length > 96 ? `${frase.slice(0, 93).trimEnd()}…` : frase;
+}
 
 /** Monta o índice de busca a partir do conteúdo (roda no build). */
 export function buildSearchDocs(): SearchDoc[] {
@@ -58,12 +72,32 @@ export function buildSearchDocs(): SearchDoc[] {
       id: `verbete:${c.slug}`,
       type: "verbete",
       title: c.termo,
-      subtitle: "Glossário",
+      subtitle: resumo(c.definicaoCurta),
       href: `/glossario/${c.slug}`,
       keywords: c.definicaoCurta,
     });
   }
-  for (const s of Object.values(sections)) {
+  for (const t of getTrilhas()) {
+    docs.push({
+      id: `trilha:${t.slug}`,
+      type: "trilha",
+      title: t.titulo,
+      subtitle: `${t.etapas.length} etapas, ${t.duracao}`,
+      href: `${sections.trilhas.href}#${t.slug}`,
+      keywords: [t.descricao, ...t.etapas.map((e) => e.titulo)].join(" "),
+    });
+  }
+  for (const m of getMarcos()) {
+    docs.push({
+      id: `marco:${m.slug}`,
+      type: "marco",
+      title: m.titulo,
+      subtitle: `${m.ano}, ${labelOf("regiao", m.regiao)}`,
+      href: `${sections.linhaDoTempo.href}#${m.slug}`,
+      keywords: [String(m.ano), m.resumo].join(" "),
+    });
+  }
+  for (const s of Object.values(sections).filter((s) => !("soon" in s && s.soon))) {
     docs.push({
       id: `secao:${s.href}`,
       type: "secao",

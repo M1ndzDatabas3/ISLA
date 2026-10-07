@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavigationMenu } from "radix-ui";
 
+import { SoonBadge } from "@/components/ui/soon-badge";
 import { megaMenu, type MegaMenuItem, type NavGroup } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
@@ -122,6 +123,7 @@ function MegaGroup({ group }: { group: NavGroup }) {
                   <>
                     <span className="font-display text-[1.25rem] leading-tight transition-colors group-hover:text-brand-text">
                       {link.label}
+                      {link.soon ? <SoonBadge /> : null}
                     </span>
                     <span className="mt-1 block text-sm leading-snug text-muted-foreground">
                       {link.description}

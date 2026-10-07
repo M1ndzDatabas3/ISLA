@@ -9,6 +9,7 @@ import { Logo } from "@/components/brand/Logo";
 import { LenisLock } from "@/components/ui/dialog";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { SoonBadge } from "@/components/ui/soon-badge";
 import { sections, siteMap } from "@/lib/navigation";
 
 import { ThemeSwitcher } from "./theme-toggle";
@@ -136,6 +137,7 @@ function MenuPanel({ onClose, onTimeline }: MenuPanelProps) {
                           className="block border-b border-hair py-2.5 font-display text-[1.625rem] leading-tight font-medium transition-colors hover:text-brand-text"
                         >
                           {link.label}
+                          {link.soon ? <SoonBadge /> : null}
                         </Link>
                       </li>
                     ))}

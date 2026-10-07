@@ -7,6 +7,7 @@ import { ArticleCard } from "@/components/editorial/article-card";
 import { BookCard } from "@/components/editorial/book-card";
 import { BookCover } from "@/components/editorial/book-cover";
 import { CiteThis } from "@/components/editorial/cite-this";
+import { WithConferir } from "@/components/editorial/conferir";
 import { ShareButtons } from "@/components/editorial/share-buttons";
 import { Section } from "@/components/layout/section";
 import { Mdx } from "@/components/mdx/mdx-content";
@@ -21,6 +22,7 @@ import {
   getLivros,
   getLivrosBySlugs,
 } from "@/lib/content";
+import { isConferir, known } from "@/lib/conferir";
 import { joinNames, toArticleCard, toBookCard, toBookSummary } from "@/lib/content/summaries";
 import { labelOf, type Nivel } from "@/lib/taxonomy";
 import { siteConfig } from "@/site.config";
@@ -62,7 +64,10 @@ export default async function LivroPage({ params }: { params: Promise<{ slug: st
   const lerAntes = getLivrosBySlugs(livro.lerAntes).map((l) => toBookCard(toBookSummary(l)));
   const lerDepois = getLivrosBySlugs(livro.lerDepois).map((l) => toBookCard(toBookSummary(l)));
   const artigos = getArtigosComLivro(slug);
-  const edicao = livro.edicoes[0];
+  // Na referência só entram dados confirmados: a primeira edição com editora e ano conhecidos.
+  const edicao = livro.edicoes.find(
+    (e) => !isConferir(e.editora) && e.ano !== undefined && !isConferir(e.ano),
+  );
   const tags = [
     ...livro.tradicoes.map((s) => ({
       label: labelOf("tradicao", s),
@@ -75,7 +80,7 @@ export default async function LivroPage({ params }: { params: Promise<{ slug: st
   const jsonLd: Book = {
     "@type": "Book",
     name: livro.titulo,
-    ...(livro.tituloOriginal ? { alternateName: livro.tituloOriginal } : {}),
+    ...(known(livro.tituloOriginal) ? { alternateName: livro.tituloOriginal } : {}),
     author: autores.map((a) => ({
       "@type": "Person",
       name: a.nome,
@@ -154,9 +159,14 @@ export default async function LivroPage({ params }: { params: Promise<{ slug: st
                 <FichaRow termo="Título completo">{livro.titulo}</FichaRow>
                 {livro.tituloOriginal ? (
                   <FichaRow termo="Título original">
-                    <span lang="und">{livro.tituloOriginal}</span>
+                    <span lang="und">
+                      <WithConferir text={livro.tituloOriginal} />
+                    </span>
                     {livro.idiomaOriginal ? (
-                      <span className="text-muted-foreground"> ({livro.idiomaOriginal})</span>
+                      <span className="text-muted-foreground">
+                        {" "}
+                        (<WithConferir text={livro.idiomaOriginal} />)
+                      </span>
                     ) : null}
                   </FichaRow>
                 ) : null}
@@ -169,19 +179,29 @@ export default async function LivroPage({ params }: { params: Promise<{ slug: st
                     <ul className="flex flex-col gap-2">
                       {livro.edicoes.map((e, i) => (
                         <li key={i}>
-                          {e.editora}
-                          {e.cidade ? `, ${e.cidade}` : ""}
-                          {e.ano ? `, ${e.ano}` : ""}
+                          <WithConferir
+                            text={[e.editora, e.cidade, e.ano].filter(Boolean).join(", ")}
+                          />
                           {e.tradutor ? (
                             <span className="text-muted-foreground">
-                              . Tradução de {e.tradutor}
+                              {e.tradutor.trim().startsWith("[CONFERIR") ? (
+                                <>
+                                  . Tradução: <WithConferir text={e.tradutor} />
+                                </>
+                              ) : (
+                                <>
+                                  . Tradução de <WithConferir text={e.tradutor} />
+                                </>
+                              )}
                             </span>
                           ) : null}
-                          {e.isbn ? (
+                          {e.isbn && !isConferir(e.isbn) ? (
                             <span className="text-muted-foreground">. ISBN {e.isbn}</span>
                           ) : null}
                           {e.observacao ? (
-                            <span className="text-muted-foreground">. {e.observacao}</span>
+                            <span className="text-muted-foreground">
+                              . <WithConferir text={e.observacao} />
+                            </span>
                           ) : null}
                         </li>
                       ))}
@@ -283,9 +303,9 @@ export default async function LivroPage({ params }: { params: Promise<{ slug: st
                     edicao: edicao
                       ? {
                           editora: edicao.editora,
-                          cidade: edicao.cidade,
+                          cidade: known(edicao.cidade),
                           ano: edicao.ano,
-                          tradutor: edicao.tradutor,
+                          tradutor: known(edicao.tradutor),
                         }
                       : undefined,
                   }}
@@ -308,11 +328,11 @@ export default async function LivroPage({ params }: { params: Promise<{ slug: st
       </Section>
 
       {artigos.length ? (
-        <Section tone="paper" className="border-t border-hair">
-          <h2 className="mb-10 font-display text-h2">Artigos sobre este livro</h2>
-          <div className="grid gap-12 md:grid-cols-3">
+        <Section tone="paper" divider>
+          <h2 className="mb-section-head font-display text-h2">Artigos sobre este livro</h2>
+          <div className="grid gap-x-[clamp(16px,2vw,32px)] md:grid-cols-3">
             {artigos.slice(0, 3).map((artigo) => (
-              <ArticleCard key={artigo.slug} article={toArticleCard(artigo)} />
+              <ArticleCard key={artigo.slug} article={toArticleCard(artigo)} variant="compact" />
             ))}
           </div>
         </Section>

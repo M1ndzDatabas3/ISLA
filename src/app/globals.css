@@ -175,12 +175,14 @@
   /*
    * Ritmo vertical. Três passos, sempre os mesmos:
    * section: entre seções (padding de cada seção);
-   * block: entre blocos dentro de uma seção (ex.: números e estante);
+   * stack: entre blocos dentro de uma seção (ex.: números e estante);
    * section-head: entre o título da seção e o conteúdo.
-   * Gera py-section, mt-block, mb-section-head etc.
+   * Gera py-section, mt-stack, mb-section-head etc.
+   * Atenção: o nome não pode coincidir com utilitários existentes. "block" gerava
+   * `.inline-block { inline-size: … }` e estreitava todo elemento inline-block.
    */
   --spacing-section: clamp(4rem, 2.75rem + 3.6vw, 6rem); /* 64 → 96 */
-  --spacing-block: clamp(2.5rem, 2rem + 1.8vw, 3.5rem); /* 40 → 56 */
+  --spacing-stack: clamp(2.5rem, 2rem + 1.8vw, 3.5rem); /* 40 → 56 */
   --spacing-section-head: clamp(2rem, 1.6rem + 1.4vw, 3rem); /* 32 → 48 */
 
   /* Cantos retos em tudo; só rounded-full continua existindo */
@@ -320,6 +322,24 @@
     stroke: currentColor;
   }
 
+  /* Sem o "x" azul nativo dos campos de busca: o site usa o próprio botão de limpar */
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    appearance: none;
+  }
+
+  /* Dado em revisão editorial ("[CONFERIR]" no conteúdo) */
+  .conferir-mark {
+    display: inline;
+    border-bottom: 1px dashed currentColor;
+    font-family: var(--font-sans);
+    font-size: 0.8125em;
+    font-style: normal;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    cursor: help;
+  }
+
   /* Sublinhado fino que desliza (links de texto) */
   .link-underline {
     background-image: linear-gradient(currentColor, currentColor);
@@ -354,7 +374,8 @@
     font-family: var(--font-text);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
-    max-width: 68ch;
+    /* ~70 a 75 caracteres por linha na Archivo (o "0" dela é estreito) */
+    max-width: 62ch;
   }
 
   .prose-editorial > * + * {

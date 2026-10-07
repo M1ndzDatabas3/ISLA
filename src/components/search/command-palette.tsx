@@ -6,8 +6,10 @@ import {
   BookOpen,
   FileText,
   Hash,
+  History,
   LayoutGrid,
   Loader2,
+  Route,
   Search,
   User,
 } from "lucide-react";
@@ -20,12 +22,14 @@ import { sections } from "@/lib/navigation";
 import { loadSearchProvider } from "@/lib/search/fuse-provider";
 import { typeLabels, type SearchDocType, type SearchResult } from "@/lib/search/types";
 
-const ordem: SearchDocType[] = ["artigo", "livro", "autor", "verbete", "secao"];
+const ordem: SearchDocType[] = ["artigo", "livro", "autor", "verbete", "trilha", "marco", "secao"];
 const icones: Record<SearchDocType, typeof FileText> = {
   artigo: FileText,
   livro: BookOpen,
   autor: User,
   verbete: Hash,
+  trilha: Route,
+  marco: History,
   secao: LayoutGrid,
 };
 

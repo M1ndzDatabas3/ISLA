@@ -44,7 +44,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-titulo"
-      className="container-page overflow-x-clip pt-block pb-section"
+      className="container-page overflow-x-clip pt-stack pb-section"
     >
       <div className="grid-page items-center gap-y-14">
         <div className="col-span-12 lg:col-span-7">
@@ -95,7 +95,7 @@ export function Hero() {
 
       <nav
         aria-label="Por onde começar"
-        className="mt-block grid md:grid-cols-3 md:gap-x-[clamp(16px,2vw,32px)]"
+        className="mt-stack grid md:grid-cols-3 md:gap-x-[clamp(16px,2vw,32px)]"
       >
         {entries.map((entry, index) => {
           const content = (

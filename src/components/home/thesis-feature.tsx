@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { ConferirNote } from "@/components/editorial/conferir";
 import { ShareQuoteButton } from "@/components/editorial/share-quote-button";
 import { CropMarks } from "@/components/graphics/crop-marks";
 import { ParallaxLayer } from "@/components/motion/parallax-layer";
@@ -69,9 +70,7 @@ export function ThesisFeature() {
                 {autor.nome}
               </Link>
               <span className="text-muted-foreground">{citacao.fonte}</span>
-              {citacao.conferir ? (
-                <span className="text-meta text-brand-text">{citacao.conferir}</span>
-              ) : null}
+              {citacao.conferir ? <ConferirNote nota={citacao.conferir} /> : null}
             </figcaption>
           </figure>
 

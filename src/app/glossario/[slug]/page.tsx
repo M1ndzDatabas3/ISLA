@@ -160,11 +160,11 @@ export default async function VerbetePage({ params }: Props) {
       </Section>
 
       {artigos.length ? (
-        <Section tone="paper" className="border-t border-hair">
-          <h2 className="mb-10 font-display text-h2">Onde o conceito aparece</h2>
-          <div className="grid gap-12 md:grid-cols-3">
+        <Section tone="paper" divider>
+          <h2 className="mb-section-head font-display text-h2">Onde o conceito aparece</h2>
+          <div className="grid gap-x-[clamp(16px,2vw,32px)] md:grid-cols-3">
             {artigos.slice(0, 3).map((a) => (
-              <ArticleCard key={a.slug} article={toArticleCard(a)} />
+              <ArticleCard key={a.slug} article={toArticleCard(a)} variant="compact" />
             ))}
           </div>
         </Section>

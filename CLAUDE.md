@@ -102,7 +102,7 @@ Escolhida em 07/10/2026 entre cinco opções (https://claude.ai/artifact/Jr1grMb
 - Ritmo vertical com três tokens de `@theme` (nunca valores soltos entre seções):
   - `py-section` (64 a 96px): padding de toda seção, inclusive faixas `tone-ink`/`tone-red` e o rodapé (`pt-section`).
   - `mb-section-head` (32 a 48px): título da seção até o conteúdo (já embutido em `SectionHeading`).
-  - `block` (40 a 56px): entre blocos de uma mesma seção (`mt-block`, `mb-block`, `gap-y-block`).
+  - `stack` (40 a 56px): entre blocos de uma mesma seção (`mt-stack`, `mb-stack`, `gap-y-stack`). Nunca nomeie um token de espaçamento como um utilitário existente: `--spacing-block` gerava `.inline-block { inline-size }` e quebrava todo link `inline-block`.
 - Entre duas seções brancas, `<Section divider>`: filete alinhado às margens do conteúdo (`section-divider`), não de ponta a ponta. Depois de faixa colorida ou do banner de citações, sem filete.
 - O usuário reclamou de 256px em branco entre seções: a soma de dois `py-section` precisa parecer uma pausa, não um vazio.
 - Fotos históricas em duotone (`duotone`) ou retícula. Até existirem fotos em domínio público, `HalftonePhoto` gera uma retícula ilustrativa (legenda deixa isso claro).
@@ -136,6 +136,17 @@ Escolhida em 07/10/2026 entre cinco opções (https://claude.ai/artifact/Jr1grMb
 - Navegação: Artigos, **Leituras** (antes "Biblioteca"), Explorar (Estudar, Ideias e história, Cultura e mídia + destaque da linha do tempo) e Instituto. "Estudar" saiu do header.
 - Placeholder (só se faltar arquivo oficial): quadrado vermelho com diagonal branca fina + nome em Archivo 500.
 - Especificação dos arquivos: `public/brand/README.md`.
+
+## Páginas e estrutura (revisão de lançamento, 07/10/2026)
+
+- **Versões iniciais já no ar** (a Fase 3 aprofunda): `/trilhas` (todas as trilhas com etapas ligadas a artigo/livro/verbete e perguntas "Para pensar"; âncora por trilha, usada pela home e pelo "Próximo passo" do artigo), `/linha-do-tempo` (marcos com livros e autores do acervo) e `/sobre` (missão, linha editorial em `#linha-editorial`, princípios, como participar, contato).
+- **Seções em preparação**: `soon: true` em `sections` (`src/lib/navigation.ts`). Isso põe "em breve" no mega menu, no menu mobile e no rodapé, tira a página do sitemap e da busca, e a página usa `ComingSoon` + `comingSoonMetadata()` (noindex), com "Em preparação" e "Enquanto isso" (seções prontas relacionadas). Nunca mostrar "fase N do projeto" ao público. Ao construir a seção, remova o `soon`.
+- **Listagens**: `/artigos` é um índice em linhas (`ArticleCard variant="row"`), sem a ilustração repetida; "artigos relacionados" usam `variant="compact"`. `/autores` é um diretório (`AuthorRow`: miniatura, nome, datas, tradições). A página do autor sem retrato mostra uma **ficha** na coluna esquerda em vez da moldura de iniciais.
+- **[CONFERIR] na tela**: a fonte mantém o marcador; a tela mostra a etiqueta "a conferir" (`.conferir-mark`), no MDX via `src/lib/mdx/rehype-conferir.ts` e nos campos via `<WithConferir>`/`<ConferirNote>`. Referências ABNT/BibTeX usam **só dados confirmados** (`known()`, primeira edição com editora e ano conhecidos); ISBN em revisão não aparece.
+- **Tipografia automática**: aspas retas viram “curvas” no MDX (`src/lib/mdx/rehype-typography.ts`). Capas geradas calculam o corpo do título pela palavra mais longa e evitam palavra curta sozinha na última linha.
+- **Busca** inclui trilhas e marcos; verbetes mostram a primeira frase da definição.
+- Prosa longa (`prose-editorial`) com `max-width: 62ch` (~72 caracteres na Archivo).
+- Home sem conteúdo de exemplo: podcast só aparece com episódios `exemplo: false`; Agenda e Conceito da semana fora até haver conteúdo real.
 
 ## Conteúdo
 
@@ -177,3 +188,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - **Pin com Lenis**: o trilho horizontal prende com `start: "center center"` e só se o conteúdo couber na tela (`innerHeight - 2 × header`); senão vira faixa com scroll-snap.
 - **Duotone + parallax**: `ParallaxLayer` (com `will-change`) cria contexto de empilhamento e anula o `mix-blend-mode` do `duotone`. Foto com parallax fica em preto e branco (`grayscale`).
 - **Links em colunas estreitas**: `inline-block` em lista flex dentro de grid encolhia para a largura mínima (quebra palavra por palavra no Chrome). Use `block`.
+- **`sed -i` do macOS não entende `\b`**: a substituição falha em silêncio. Para renomear classes, use um script Python (ou `perl -pi`) e confira com `grep` depois.

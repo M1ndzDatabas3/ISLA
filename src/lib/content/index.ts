@@ -192,6 +192,28 @@ export function getTrilha(slug: string) {
   return trilhas.get(slug);
 }
 
+const tiposDeEtapa: Record<Trilha["etapas"][number]["tipo"], string> = {
+  texto: "Texto",
+  livro: "Livro",
+  capitulo: "Capítulo",
+  video: "Vídeo",
+  verbete: "Verbete",
+  artigo: "Artigo",
+};
+
+/** Rótulo do tipo e link da etapa (artigo, livro/capítulo ou verbete do acervo). */
+export function resolveEtapa(etapa: Trilha["etapas"][number]) {
+  const ref = etapa.referencia;
+  let href: string | undefined;
+  if (ref) {
+    if (etapa.tipo === "artigo" && artigos.has(ref)) href = `/artigos/${ref}`;
+    else if ((etapa.tipo === "livro" || etapa.tipo === "capitulo") && livros.has(ref))
+      href = `/biblioteca/${ref}`;
+    else if (etapa.tipo === "verbete" && conceitos.has(ref)) href = `/glossario/${ref}`;
+  }
+  return { tipo: tiposDeEtapa[etapa.tipo], href };
+}
+
 export function getMarcos(): Marco[] {
   return [...allMarcos].sort((a, b) => a.ano - b.ano);
 }

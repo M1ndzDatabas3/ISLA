@@ -13,6 +13,8 @@ export interface NavLink {
   label: string;
   href: string;
   description?: string;
+  /** Seção ainda em preparação: os menus mostram "em breve". */
+  soon?: boolean;
 }
 
 export interface NavGroup {
@@ -62,11 +64,13 @@ export const sections = {
     label: "Acervo",
     href: "/acervo",
     description: "Textos clássicos em domínio público, na íntegra.",
+    soon: true,
   },
   mapa: {
     label: "Mapa de pensadores",
     href: "/mapa",
     description: "A rede de influências entre autores e tradições.",
+    soon: true,
   },
   linhaDoTempo: {
     label: "Linha do tempo",
@@ -77,22 +81,31 @@ export const sections = {
     label: "Debates",
     href: "/debates",
     description: "Correntes em diálogo, polêmicas e críticas.",
+    soon: true,
   },
   cultura: {
     label: "Cultura",
     href: "/cultura",
     description: "Cinema, música, literatura e artes visuais.",
+    soon: true,
   },
   podcast: {
     label: "Podcast e vídeos",
     href: "/podcast",
     description: "Episódios, entrevistas e aulas.",
+    soon: true,
   },
-  agenda: { label: "Agenda", href: "/agenda", description: "Eventos, cursos e lançamentos." },
+  agenda: {
+    label: "Agenda",
+    href: "/agenda",
+    description: "Eventos, cursos e lançamentos.",
+    soon: true,
+  },
   publique: {
     label: "Publique",
     href: "/publique",
     description: "Chamada aberta para estudantes e pesquisadores.",
+    soon: true,
   },
   sobre: {
     label: "Sobre",

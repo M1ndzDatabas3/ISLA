@@ -1,13 +1,19 @@
-import type { Metadata } from "next";
+import { JoinDialog } from "@/components/community/join-dialog";
+import { ComingSoon, comingSoonMetadata } from "@/components/layout/coming-soon";
 
-import { ComingSoon } from "@/components/layout/coming-soon";
-import { sections } from "@/lib/navigation";
-
-export const metadata: Metadata = {
-  title: sections.publique.label,
-  description: sections.publique.description,
-};
+export const metadata = comingSoonMetadata("publique");
 
 export default function Page() {
-  return <ComingSoon section="publique" phase={3} />;
+  return (
+    <ComingSoon
+      section="publique"
+      action={
+        <JoinDialog>
+          <button type="button" className="link-underline cursor-pointer text-sm font-medium">
+            Quero escrever para o Instituto
+          </button>
+        </JoinDialog>
+      }
+    />
+  );
 }

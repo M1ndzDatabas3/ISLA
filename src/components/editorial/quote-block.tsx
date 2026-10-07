@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
+import { ConferirNote } from "./conferir";
 import { ShareQuoteButton } from "./share-quote-button";
 
 interface QuoteBlockProps {
@@ -52,7 +53,12 @@ export function QuoteBlock({
           <span className="font-medium text-foreground">{autor}</span>
         )}
         {fonte ? <>, {fonte}</> : null}
-        {nota ? <span className="ml-1 text-brand-text">{nota}</span> : null}
+        {nota ? (
+          <>
+            {" "}
+            <ConferirNote nota={nota} />
+          </>
+        ) : null}
       </figcaption>
       {shareable ? (
         <div className="mt-4">

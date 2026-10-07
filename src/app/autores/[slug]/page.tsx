@@ -78,31 +78,71 @@ export default async function AutorPage({ params }: Props) {
           className="mb-12"
         />
         <div className="grid-page items-start gap-y-10">
-          <div className="col-span-12 sm:col-span-6 lg:sticky lg:top-[calc(var(--header-h)+32px)] lg:col-span-4">
-            <AuthorPortrait
-              nome={autor.nome}
-              retrato={autor.retrato}
-              sizes="(min-width: 1024px) 30vw, 90vw"
-            />
+          <aside
+            className={
+              "col-span-12 lg:sticky lg:top-[calc(var(--header-h)+32px)] lg:col-span-4" +
+              (autor.retrato ? "" : " order-last lg:order-none")
+            }
+          >
             {autor.retrato ? (
-              <p className="mt-3 text-meta text-muted-foreground">
-                {autor.retrato.credito}. {autor.retrato.licenca}.
-                {autor.retrato.fonte ? (
-                  <>
-                    {" "}
-                    <a
-                      href={autor.retrato.fonte}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      Fonte
-                    </a>
-                  </>
-                ) : null}
-              </p>
+              <figure className="m-0 mb-stack max-w-sm">
+                <AuthorPortrait
+                  nome={autor.nome}
+                  retrato={autor.retrato}
+                  sizes="(min-width: 1024px) 30vw, 90vw"
+                />
+                <figcaption className="mt-3 text-meta text-muted-foreground">
+                  {autor.retrato.credito}. {autor.retrato.licenca}.
+                  {autor.retrato.fonte ? (
+                    <>
+                      {" "}
+                      <a
+                        href={autor.retrato.fonte}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline underline-offset-2"
+                      >
+                        Fonte
+                      </a>
+                    </>
+                  ) : null}
+                </figcaption>
+              </figure>
             ) : null}
-          </div>
+            <h2 className="text-meta text-muted-foreground">Ficha</h2>
+            <dl className="mt-3 border-t border-hair text-sm">
+              {[
+                autor.nomeCompleto && autor.nomeCompleto !== autor.nome
+                  ? { termo: "Nome completo", valor: autor.nomeCompleto }
+                  : null,
+                autor.nascimento ? { termo: "Nascimento", valor: String(autor.nascimento) } : null,
+                autor.morte ? { termo: "Morte", valor: String(autor.morte) } : null,
+                { termo: "Nacionalidade", valor: autor.nacionalidade },
+                autor.regioes.length
+                  ? {
+                      termo: "Regiões",
+                      valor: autor.regioes.map((r) => labelOf("regiao", r)).join(", "),
+                    }
+                  : null,
+                livros.length
+                  ? {
+                      termo: "No acervo",
+                      valor: `${livros.length} ${livros.length === 1 ? "livro" : "livros"}`,
+                    }
+                  : null,
+              ]
+                .filter((row): row is { termo: string; valor: string } => Boolean(row))
+                .map((row) => (
+                  <div
+                    key={row.termo}
+                    className="grid grid-cols-[8rem_1fr] gap-3 border-b border-hair py-2.5"
+                  >
+                    <dt className="text-muted-foreground">{row.termo}</dt>
+                    <dd className="tabular-nums">{row.valor}</dd>
+                  </div>
+                ))}
+            </dl>
+          </aside>
 
           <div className="col-span-12 lg:col-span-7 lg:col-start-6">
             <p className="text-meta text-muted-foreground tabular-nums">
@@ -193,8 +233,8 @@ export default async function AutorPage({ params }: Props) {
       </Section>
 
       {livros.length ? (
-        <Section tone="paper" className="border-t border-hair">
-          <h2 className="mb-10 font-display text-h2">Na biblioteca</h2>
+        <Section tone="paper" divider>
+          <h2 className="mb-section-head font-display text-h2">Na biblioteca</h2>
           <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
             {livros.map((book) => (
               <BookCard key={book.slug} book={book} />
@@ -204,11 +244,11 @@ export default async function AutorPage({ params }: Props) {
       ) : null}
 
       {artigos.length ? (
-        <Section tone="paper" className="border-t border-hair">
-          <h2 className="mb-10 font-display text-h2">Artigos sobre {autor.nome}</h2>
-          <div className="grid gap-12 md:grid-cols-3">
+        <Section tone="paper" divider>
+          <h2 className="mb-section-head font-display text-h2">Artigos sobre {autor.nome}</h2>
+          <div className="grid gap-x-[clamp(16px,2vw,32px)] md:grid-cols-3">
             {artigos.slice(0, 3).map((a) => (
-              <ArticleCard key={a.slug} article={toArticleCard(a)} />
+              <ArticleCard key={a.slug} article={toArticleCard(a)} variant="compact" />
             ))}
           </div>
         </Section>

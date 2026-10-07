@@ -8,6 +8,9 @@ import { compileMDX } from "@content-collections/mdx";
 import GithubSlugger from "github-slugger";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+
+import rehypeConferir from "./src/lib/mdx/rehype-conferir";
+import rehypeTypography from "./src/lib/mdx/rehype-typography";
 import { z } from "zod";
 
 import {
@@ -37,7 +40,10 @@ const imagem = z.object({
   fonte: z.string().optional(),
 });
 
-const mdxOptions = { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] };
+const mdxOptions = {
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [rehypeSlug, rehypeConferir, rehypeTypography],
+};
 
 /** Sumário a partir dos títulos ## e ### (mesmos ids que o rehype-slug gera). */
 function tableOfContents(content: string) {

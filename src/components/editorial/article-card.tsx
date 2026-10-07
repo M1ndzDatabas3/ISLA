@@ -25,7 +25,11 @@ export interface ArticleCardData {
 
 interface ArticleCardProps {
   article: ArticleCardData;
-  variant?: "feature" | "default" | "compact";
+  /**
+   * feature: destaque com imagem; default: card com imagem; compact: título e meta;
+   * row: linha de índice (data e tema à esquerda, texto ao centro), sem imagem.
+   */
+  variant?: "feature" | "default" | "compact" | "row";
   className?: string;
   /** Nível do título para manter a hierarquia da página. */
   headingLevel?: "h2" | "h3";
@@ -58,6 +62,40 @@ export function ArticleCard({
       {article.tema.label}
     </Link>
   );
+
+  if (variant === "row") {
+    return (
+      <article
+        className={cn(
+          "group relative grid gap-x-[clamp(16px,2vw,32px)] gap-y-3 border-t border-hair py-8 md:grid-cols-12 lg:py-10",
+          className,
+        )}
+      >
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 md:col-span-3 md:flex-col md:gap-y-2">
+          {tema}
+          <time dateTime={article.data} className="text-meta text-muted-foreground">
+            {formatDate(article.data)}
+          </time>
+        </div>
+        <div className="md:col-span-7">
+          <Heading className="font-display text-[clamp(1.5rem,1.2rem+1vw,2.125rem)]/[1.08] transition-colors group-hover:text-brand-text">
+            {titleLink}
+          </Heading>
+          {article.linhaFina ? (
+            <p className="mt-3 max-w-[60ch] font-text text-base leading-snug text-muted-foreground">
+              {article.linhaFina}
+            </p>
+          ) : null}
+        </div>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-meta text-muted-foreground md:col-span-2 md:flex-col md:items-end md:text-right">
+          <span>
+            {article.tipo}, {formatReadingTime(article.leituraMin)}
+          </span>
+          <LevelBadge nivel={article.nivel} />
+        </div>
+      </article>
+    );
+  }
 
   if (variant === "compact") {
     return (

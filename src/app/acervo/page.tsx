@@ -1,13 +1,7 @@
-import type { Metadata } from "next";
+import { ComingSoon, comingSoonMetadata } from "@/components/layout/coming-soon";
 
-import { ComingSoon } from "@/components/layout/coming-soon";
-import { sections } from "@/lib/navigation";
-
-export const metadata: Metadata = {
-  title: sections.acervo.label,
-  description: sections.acervo.description,
-};
+export const metadata = comingSoonMetadata("acervo");
 
 export default function Page() {
-  return <ComingSoon section="acervo" phase={3} />;
+  return <ComingSoon section="acervo" />;
 }

@@ -44,6 +44,23 @@ interface BookCoverProps {
   className?: string;
 }
 
+/**
+ * Corpo do título em cqi: cabe a palavra mais longa sem quebrá-la no meio
+ * (a largura útil é ~82cqi; a Archivo semicondensada 600 tem ~0,56em por letra).
+ * Títulos longos descem um pouco para caberem em até quatro linhas.
+ */
+function titleSize(titulo: string) {
+  const longest = Math.max(...titulo.split(/[\s-]+/).map((w) => w.length));
+  const byWord = 80 / (0.56 * longest);
+  const byLength = titulo.length > 44 ? 10.5 : titulo.length > 30 ? 12 : 13;
+  return Math.min(byLength, byWord);
+}
+
+/** Evita palavra curta sozinha na última linha ("Livro I", "e a"). */
+function noOrphan(titulo: string) {
+  return titulo.replace(/ (\S{1,3})$/, "\u00a0$1");
+}
+
 export function BookCover({ titulo, autor, ano, tradicao, seed, className }: BookCoverProps) {
   const { scheme, glyph } = byTradition[tradicao];
   const { bg, fg, mark } = schemes[scheme];
@@ -56,12 +73,19 @@ export function BookCover({ titulo, autor, ano, tradicao, seed, className }: Boo
       style={{ backgroundColor: bg, color: fg }}
     >
       {scheme === "paper" ? <div className="absolute inset-0 border border-[#d4d4d4]" /> : null}
+      {/* No tema escuro a capa preta some no fundo: um filete sutil marca a borda */}
+      {scheme === "ink" ? (
+        <div className="absolute inset-0 hidden border border-white/15 dark:block" />
+      ) : null}
       <Glyph glyph={glyph} color={mark} right={right} />
       <div className="relative flex h-full flex-col justify-between p-[9cqi]">
         <span className="font-sans text-[7cqi] leading-tight font-medium">{autor}</span>
         <span className="flex flex-col gap-[4cqi]">
-          <span className="font-display text-[13cqi] leading-[1.02] [overflow-wrap:anywhere]">
-            {titulo}
+          <span
+            className="font-display leading-[1.04] text-balance hyphens-manual"
+            style={{ fontSize: `${titleSize(titulo).toFixed(2)}cqi` }}
+          >
+            {noOrphan(titulo)}
           </span>
           {ano ? (
             <span className="font-sans text-[6cqi] tabular-nums opacity-75">{ano}</span>

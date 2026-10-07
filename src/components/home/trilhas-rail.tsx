@@ -39,7 +39,7 @@ export function TrilhasRail() {
             </div>
             <h3 className="mt-5 font-display text-[clamp(1.625rem,1.3rem+1vw,2.125rem)]/[1.08] transition-colors group-hover:text-brand-text">
               <Link
-                href={sections.trilhas.href}
+                href={`${sections.trilhas.href}#${trilha.slug}`}
                 className="after:absolute after:inset-0 after:content-['']"
               >
                 {trilha.titulo}

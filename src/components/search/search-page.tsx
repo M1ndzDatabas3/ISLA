@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Link from "next/link";
 import { parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
 import { useEffect, useId, useState } from "react";
@@ -9,7 +9,7 @@ import { loadSearchProvider } from "@/lib/search/fuse-provider";
 import { typeLabels, type SearchDocType, type SearchResult } from "@/lib/search/types";
 import { cn } from "@/lib/utils";
 
-const tipos = ["todos", "artigo", "livro", "autor", "verbete"] as const;
+const tipos = ["todos", "artigo", "livro", "autor", "verbete", "trilha", "marco"] as const;
 
 /** Página de busca: consulta e tipo na URL, resultados agrupados. */
 export function SearchPageView() {
@@ -54,12 +54,23 @@ export function SearchPageView() {
         <input
           id={id}
           type="search"
+          enterKeyHint="search"
           autoFocus
           value={q}
           onChange={(e) => void setParams({ q: e.target.value })}
-          placeholder="Buscar artigos, livros, autores e verbetes"
-          className="h-16 w-full border-b border-foreground bg-transparent pl-9 font-display text-[clamp(1.5rem,1.2rem+1.2vw,2.25rem)] outline-none placeholder:text-muted-foreground"
+          placeholder="Buscar artigos, livros, autores, verbetes e trilhas"
+          className="h-16 w-full border-b border-foreground bg-transparent pr-12 pl-9 font-display text-[clamp(1.5rem,1.2rem+1.2vw,2.25rem)] outline-none placeholder:text-muted-foreground"
         />
+        {q ? (
+          <button
+            type="button"
+            onClick={() => void setParams({ q: "" })}
+            aria-label="Limpar busca"
+            className="absolute top-1/2 right-0 inline-flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <X className="size-5" strokeWidth={1.5} aria-hidden />
+          </button>
+        ) : null}
       </div>
 
       <div role="group" aria-label="Tipo de resultado" className="flex flex-wrap gap-2">

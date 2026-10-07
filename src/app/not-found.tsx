@@ -5,7 +5,7 @@ import { sections } from "@/lib/navigation";
 
 export default function NotFound() {
   return (
-    <section className="container-page py-[clamp(72px,11vw,160px)]">
+    <section className="container-page py-section">
       <p className="font-display text-[clamp(5rem,16vw,12rem)] leading-none text-brand-text">404</p>
       <h1 className="mt-8 max-w-[20ch] font-display text-h1">
         Esta página não está no acervo

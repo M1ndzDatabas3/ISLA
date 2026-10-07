@@ -104,9 +104,15 @@ export function ArticlesExplorer({ articles }: { articles: ArticleListItem[] }) 
       </div>
 
       {visiveis.length ? (
-        <div className="grid gap-x-8 gap-y-14 pt-10 md:grid-cols-2 lg:grid-cols-3">
+        <div>
           {visiveis.map((article) => (
-            <ArticleCard key={article.slug} article={article} headingLevel="h2" />
+            <ArticleCard
+              key={article.slug}
+              article={article}
+              variant="row"
+              headingLevel="h2"
+              className="first:border-t-0"
+            />
           ))}
         </div>
       ) : (

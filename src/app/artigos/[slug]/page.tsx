@@ -192,7 +192,7 @@ export default async function ArtigoPage({ params }: Props) {
                 <p className="mt-2 font-display text-h3">{trilha.titulo}</p>
                 <p className="mt-2 max-w-[52ch] text-muted-foreground">{trilha.descricao}</p>
                 <Link
-                  href="/trilhas"
+                  href={`/trilhas#${trilha.slug}`}
                   className="link-underline mt-4 inline-block text-sm font-medium"
                 >
                   Seguir a trilha
@@ -204,8 +204,8 @@ export default async function ArtigoPage({ params }: Props) {
       </Section>
 
       {livros.length ? (
-        <Section tone="paper" className="border-t border-hair">
-          <h2 className="mb-10 font-display text-h2">Para ler a seguir</h2>
+        <Section tone="paper" divider>
+          <h2 className="mb-section-head font-display text-h2">Para ler a seguir</h2>
           <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
             {livros.map((book) => (
               <BookCard key={book.slug} book={book} />
@@ -215,11 +215,11 @@ export default async function ArtigoPage({ params }: Props) {
       ) : null}
 
       {relacionados.length ? (
-        <Section tone="paper" className="border-t border-hair">
-          <h2 className="mb-10 font-display text-h2">Artigos relacionados</h2>
-          <div className="grid gap-12 md:grid-cols-3">
+        <Section tone="paper" divider>
+          <h2 className="mb-section-head font-display text-h2">Artigos relacionados</h2>
+          <div className="grid gap-x-[clamp(16px,2vw,32px)] md:grid-cols-3">
             {relacionados.map((r) => (
-              <ArticleCard key={r.slug} article={toArticleCard(r)} />
+              <ArticleCard key={r.slug} article={toArticleCard(r)} variant="compact" />
             ))}
           </div>
         </Section>
