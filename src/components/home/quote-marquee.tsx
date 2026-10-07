@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ShareQuoteButton } from "@/components/share/share-quote-button";
 import { getAutor, getCitacoes } from "@/lib/content";
 
 import { FEATURED_QUOTE } from "./featured-quote";
@@ -29,6 +30,15 @@ export function QuoteMarquee() {
             </span>
             <span className="text-sm text-muted-foreground">{c.pessoa!.nome}</span>
           </Link>
+          <ShareQuoteButton
+            aparencia="icone"
+            fonte={{ id: c.slug }}
+            texto={c.texto}
+            atribuicao={c.pessoa!.nome}
+            caminho={`/autores/${c.pessoa!.slug}`}
+            tabIndex={copia ? -1 : undefined}
+            className="mr-[clamp(8px,1.5vw,20px)] -ml-[clamp(12px,2vw,28px)]"
+          />
           <span aria-hidden className="size-1.5 shrink-0 bg-red" />
         </li>
       ))}

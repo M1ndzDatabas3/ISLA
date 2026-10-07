@@ -13,6 +13,7 @@ import { Section } from "@/components/layout/section";
 import { FootnotePopovers } from "@/components/mdx/footnotes";
 import { Mdx } from "@/components/mdx/mdx-content";
 import { JsonLd } from "@/components/seo/json-ld";
+import { SelectionShare } from "@/components/share/selection-share";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Chip } from "@/components/ui/chip";
 import { LevelBadge } from "@/components/ui/level-badge";
@@ -135,10 +136,17 @@ export default async function ArtigoPage({ params }: Props) {
             <article id="corpo-do-artigo">
               <FootnotePopovers>
                 <div className="prose-editorial">
-                  <Mdx code={artigo.mdx} />
+                  <Mdx code={artigo.mdx} artigo={slug} />
                 </div>
               </FootnotePopovers>
             </article>
+            {/* Selecionar um trecho do corpo abre "Compartilhar citação" e "Copiar". */}
+            <SelectionShare
+              alvo="#corpo-do-artigo"
+              artigo={slug}
+              titulo={artigo.titulo}
+              assinatura={artigo.assinatura}
+            />
 
             {conceitos.length ? (
               <section aria-labelledby="conceitos" className="mt-16 border-t border-hair pt-8">

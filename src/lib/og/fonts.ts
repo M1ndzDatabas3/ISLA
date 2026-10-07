@@ -43,3 +43,35 @@ export function loadOgFonts() {
   );
   return cache;
 }
+
+type CardFont = Omit<OgFont, "weight"> & { weight: 400 | 500 };
+
+/**
+ * Fontes do card de citação (/og/citacao), no espírito dos lambes: Lora itálica
+ * na citação, Oswald na atribuição. WOFF da Fontsource (o Satori não lê WOFF2);
+ * a Archivo entra como reserva para algum caractere que falte.
+ */
+const cardFiles: {
+  file: string;
+  name: string;
+  weight: CardFont["weight"];
+  style: CardFont["style"];
+}[] = [
+  { file: "Lora-Italic.woff", name: "Lora", weight: 400, style: "italic" },
+  { file: "Lora-Regular.woff", name: "Lora", weight: 400, style: "normal" },
+  { file: "Oswald-Medium.woff", name: "Oswald", weight: 500, style: "normal" },
+  { file: "Oswald-Regular.woff", name: "Oswald", weight: 400, style: "normal" },
+  { file: "Archivo-Regular.ttf", name: "Archivo", weight: 400, style: "normal" },
+];
+
+let cardCache: Promise<CardFont[]> | null = null;
+
+export function loadQuoteCardFonts() {
+  cardCache ??= Promise.all(
+    cardFiles.map(async ({ file, ...meta }) => ({
+      ...meta,
+      data: await readFile(join(dir, file)),
+    })),
+  );
+  return cardCache;
+}

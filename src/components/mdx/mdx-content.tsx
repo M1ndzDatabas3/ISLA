@@ -22,31 +22,36 @@ function Termo({ slug, children }: { slug: string; children: React.ReactNode }) 
   );
 }
 
-/** <Citacao autor="karl-marx" fonte="..." conferir="...">texto</Citacao> no MDX. */
-function Citacao({
-  autor,
-  fonte,
-  conferir,
-  children,
-}: {
+type CitacaoProps = {
   autor: string;
   fonte?: string;
   conferir?: string;
   children: React.ReactNode;
-}) {
-  const pessoa = getAutor(autor);
-  const texto = typeof children === "string" ? children : extractText(children);
-  return (
-    <QuoteBlock
-      text={texto}
-      autor={pessoa?.nome ?? autor}
-      autorHref={pessoa ? `/autores/${pessoa.slug}` : undefined}
-      fonte={fonte}
-      nota={conferir}
-      className="not-prose my-12"
-      compact
-    />
-  );
+};
+
+/**
+ * <Citacao autor="karl-marx" fonte="..." conferir="...">texto</Citacao> no MDX.
+ * Dentro de um artigo, ganha o botão de compartilhar (o card confere o texto no artigo).
+ */
+function citacao(artigo?: string) {
+  return function Citacao({ autor, fonte, conferir, children }: CitacaoProps) {
+    const pessoa = getAutor(autor);
+    const texto = typeof children === "string" ? children : extractText(children);
+    return (
+      <QuoteBlock
+        text={texto}
+        autor={pessoa?.nome ?? autor}
+        autorHref={pessoa ? `/autores/${pessoa.slug}` : undefined}
+        fonte={fonte}
+        nota={conferir}
+        share={
+          artigo && pessoa ? { fonte: { artigo, texto }, caminho: `/artigos/${artigo}` } : undefined
+        }
+        className="not-prose my-12"
+        compact
+      />
+    );
+  };
 }
 
 function extractText(node: React.ReactNode): string {
@@ -104,14 +109,14 @@ function heading(Tag: "h2" | "h3") {
   };
 }
 
-const components = {
+const base = {
   Termo,
-  Citacao,
   a: Anchor,
   h2: heading("h2"),
   h3: heading("h3"),
 };
 
-export function Mdx({ code }: { code: string }) {
-  return <MDXContent code={code} components={components} />;
+/** `artigo`: slug do artigo, para as citações virarem card de compartilhamento. */
+export function Mdx({ code, artigo }: { code: string; artigo?: string }) {
+  return <MDXContent code={code} components={{ ...base, Citacao: citacao(artigo) }} />;
 }

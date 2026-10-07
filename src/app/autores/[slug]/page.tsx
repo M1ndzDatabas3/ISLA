@@ -215,6 +215,7 @@ export default async function AutorPage({ params }: Props) {
                       autor={autor.nome}
                       fonte={c.fonte}
                       nota={c.conferir}
+                      share={{ fonte: { id: c.slug }, caminho: `/autores/${autor.slug}` }}
                       compact
                     />
                   ))}

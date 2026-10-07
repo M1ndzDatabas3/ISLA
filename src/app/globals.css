@@ -244,6 +244,12 @@
     color: var(--brand-foreground);
   }
 
+  /* Trecho destacado ao abrir um link de citação (#:~:text=…). */
+  ::target-text {
+    background-color: color-mix(in srgb, var(--red) 22%, transparent);
+    color: inherit;
+  }
+
   /* Títulos: Archivo semicondensada, peso 600, espaçamento fechado.
      Utilitários de peso (font-medium etc.) continuam valendo por cima. */
   .font-display {

@@ -173,6 +173,32 @@ Vitrine de artistas latino-americanos que fazem arte política e popular, com pr
 - **Inscrições**: Server Action `inscreverNoMural` → webhook `MURAL_INSCRICOES_WEBHOOK_URL` (POST JSON; Apps Script, Formspree, Make, n8n…). Sem a variável, desenvolvimento aceita sem gravar e produção responde "abre em breve". Sem upload de arquivos: só links.
 - **JSON-LD**: `Person`, `VisualArtwork`, `ExhibitionEvent` e `CreativeWork` (clássicos).
 
+## Citação compartilhável (entregue em 07/10/2026)
+
+- **Rota** `src/app/og/citacao/route.tsx` (imagem em `src/lib/og/quote-card.tsx`):
+  - `?id=<slug>`: citação de `content/citacoes`;
+  - `?artigo=<slug>&texto=<seleção>`: trecho de artigo;
+  - `&formato=quadrado|stories|link` (1080², 1080×1920, 1200×630);
+  - `&tema=papel|tinta|vermelho`.
+    Resposta com `s-maxage` de um ano (a CDN guarda até o próximo deploy); erros em texto, `no-store`.
+- **Regras de segurança** (`src/lib/share/excerpt.ts`, com testes):
+  - O texto do card nunca vem do parâmetro. A seleção só localiza o trecho no corpo do artigo (comparando só letras e números, sem aspas, hífens, pontuação nem marcação) e o card mostra o texto do próprio artigo, com palavras inteiras nas pontas.
+  - A atribuição sai dos dados: assinatura do artigo ("Trecho de: título") ou, dentro de `<Citacao>`, o autor citado ("Citado em: título").
+  - A rota recusa (400): trecho inexistente, mais de 400 caracteres, menos de 12 letras e frase com `[CONFERIR]` (a marca vale até o ponto final). Notas de rodapé não entram.
+- **Card** no espírito dos lambes, a pedido do usuário: Lora itálica, Oswald em caixa alta na atribuição, aspas grandes e régua vermelhas.
+  - Cores: papel `#F3EEE4` com grão, tinta `#111` e vermelho `#C8102E`. É exceção consciente à Archivo e ao `#CD0000` do site, só nos cards.
+  - Stories reserva 250px no topo e 300px na base.
+  - Corpo por extensão: até 120, 240 e 400 caracteres.
+  - Logo: color no papel, light na tinta e toda branca no vermelho (`src/assets/og/logo-horizontal-branca.png`, derivada da monocromática).
+  - Grão e logo branca vêm de `scripts/og-assets.mjs`.
+  - No Satori, `inset` não funciona (use `top/left/width/height`) e `radial-gradient` escurece o card inteiro.
+- **Interface** (`src/components/share/`):
+  - `QuoteShareDialog`: modal no desktop e drawer no celular, com prévia, formato, tema, Compartilhar (arquivo pela Web Share API, senão o link), Baixar imagem e Copiar link. O link leva `#:~:text=` (`fragmentoDeTexto`) e o navegador destaca o trecho (`::target-text` em vermelho claro).
+  - `ShareQuoteButton`: botão "Compartilhar citação" (ou só ícone, na faixa da home). É usado na citação em destaque da home, na faixa de citações, nas páginas de autor e nos `<Citacao>` dos artigos, onde aparece no hover com mouse e sempre no toque.
+  - `SelectionShare`: só na página de artigo. Selecionar um trecho do corpo abre "Compartilhar citação" e "Copiar". No desktop o menu flutua acima da seleção; no celular é uma barra na base. Some ao rolar.
+  - Partes que não são texto ficam fora da seleção copiada: `sup`, `.conferir-mark`, âncora de título e `[data-share-ignore]`. O termo do glossário é um `<button>` com o texto e fica.
+- **Pendente**: "Hoje na história" (etapa opcional) não foi feito. Os marcos da linha do tempo só têm mês e ano, e o dia exigiria dados que o acervo não tem.
+
 ## Conteúdo
 
 - Autores e obras reais. **Nunca inventar citações nem dados bibliográficos.** Dado incerto (ano, editora, ISBN, tradução) leva `[CONFERIR]`.
@@ -208,7 +234,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - **Grids com régua**: use bordas nos itens (`border-r-2 border-b-2` + `border-t-2 border-l-2` no contêiner), não `gap-px` com fundo tinta: itens escondidos pelo reveal deixariam um bloco preto.
 - **Tons de seção**: dentro de `.tone-red`, `--brand` vira tinta (botão primário fica tinta sobre vermelho). Demonstrações de cor absoluta (logo sobre papel/tinta/vermelho) usam `bg-paper`/`bg-ink`/`bg-red`, que não mudam com o tema.
 - **Constantes usadas no servidor** não podem vir de arquivos `"use client"` (viram referência de cliente). Ex.: `themeInitScript` mora em `src/lib/theme.ts`.
-- `NEXT_PUBLIC_SITE_URL` precisa estar definido em produção; sem ele, `og:image` e o sitemap apontam para `http://localhost:3000`.
+- `NEXT_PUBLIC_SITE_URL` precisa estar definido em produção; sem ele, `og:image` e o sitemap apontam para `http://localhost:3000` (na Vercel, o fallback é o domínio de produção do projeto).
+- **Cards nas redes exigem site público**: com a Deployment Protection (Vercel Authentication) ligada para produção, WhatsApp, X e afins recebem a tela de login e o link sai sem imagem.
 - **Formulários com Server Action**: o `<form action>` do React 19 reinicia o formulário depois de cada envio, e um `<select>` controlado volta para a primeira opção na tela (o estado continua outro). Use `onSubmit` com `preventDefault` + `startTransition(() => action(formData))` e mantenha `action={action}` para funcionar sem JavaScript.
 - **Pin com Lenis**: o trilho horizontal prende com `start: "center center"` e só se o conteúdo couber na tela (`innerHeight - 2 × header`); senão vira faixa com scroll-snap.
 - **Duotone + parallax**: `ParallaxLayer` (com `will-change`) cria contexto de empilhamento e anula o `mix-blend-mode` do `duotone`. Foto com parallax fica em preto e branco (`grayscale`).

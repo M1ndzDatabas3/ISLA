@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { ConferirNote } from "@/components/editorial/conferir";
-import { ShareQuoteButton } from "@/components/editorial/share-quote-button";
 import { CropMarks } from "@/components/graphics/crop-marks";
 import { ParallaxLayer } from "@/components/motion/parallax-layer";
 import { ScrubWords } from "@/components/motion/scrub-words";
+import { ShareQuoteButton } from "@/components/share/share-quote-button";
 import { getAutor, getCitacoes, getLivro } from "@/lib/content";
 
 /** Citação da faixa preta da home (slug em content/citacoes). */
@@ -94,9 +94,10 @@ export function FeaturedQuote() {
 
           <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
             <ShareQuoteButton
-              text={citacao.texto}
-              attribution={autor.nome}
-              source={citacao.fonte}
+              fonte={{ id: citacao.slug }}
+              texto={citacao.texto}
+              atribuicao={autor.nome}
+              caminho={`/autores/${autor.slug}`}
             />
             {livro ? (
               <Link
