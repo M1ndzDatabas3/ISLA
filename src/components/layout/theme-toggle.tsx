@@ -30,8 +30,8 @@ export function ThemeToggle({ className }: { className?: string }) {
 
 const options: { value: Theme; label: string; Icon: typeof Sun }[] = [
   { value: "light", label: "Claro", Icon: Sun },
-  { value: "system", label: "Sistema", Icon: Monitor },
   { value: "dark", label: "Escuro", Icon: Moon },
+  { value: "system", label: "Sistema", Icon: Monitor },
 ];
 
 /** Seletor de três estados (rodapé e menu mobile). */

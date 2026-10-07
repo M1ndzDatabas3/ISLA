@@ -2,13 +2,14 @@ import Link from "next/link";
 
 import { getAutor, getCitacoes } from "@/lib/content";
 
+import { FEATURED_QUOTE } from "./featured-quote";
 import { MarqueeTrack } from "./marquee-track";
 
 /** Faixa contínua de citações curtas; cada uma leva à página de quem a escreveu. */
 export function QuoteMarquee() {
   const citacoes = getCitacoes()
-    // A tese XI tem seção própria na home.
-    .filter((c) => c.slug !== "marx-teses-feuerbach" && c.texto.length <= 150)
+    // A citação em destaque tem seção própria na home.
+    .filter((c) => c.slug !== FEATURED_QUOTE && c.texto.length <= 150)
     .map((c) => ({ ...c, pessoa: getAutor(c.autor) }))
     .filter((c) => c.pessoa);
   if (citacoes.length < 3) return null;

@@ -245,6 +245,8 @@ const citacoes = defineCollection({
     /** Ex.: "[CONFERIR tradução]". */
     conferir: z.string().optional(),
     livro: z.string().optional(),
+    /** Parágrafo de contexto, usado quando a citação aparece em destaque. */
+    contexto: z.string().optional(),
   }),
   transform: (doc) => ({ ...doc, slug: doc._meta.path }),
 });

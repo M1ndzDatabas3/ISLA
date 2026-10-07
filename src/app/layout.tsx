@@ -46,10 +46,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: palette.paper },
-    { media: "(prefers-color-scheme: dark)", color: palette.ink },
-  ],
+  // O site abre no claro; o ThemeProvider troca esta cor quando a pessoa escolhe o escuro.
+  themeColor: palette.paper,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

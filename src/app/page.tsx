@@ -6,7 +6,7 @@ import { Hero } from "@/components/home/hero";
 import { LibraryHighlight } from "@/components/home/library-highlight";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { QuoteMarquee } from "@/components/home/quote-marquee";
-import { ThesisFeature } from "@/components/home/thesis-feature";
+import { FeaturedQuote } from "@/components/home/featured-quote";
 import { TimelinePreview } from "@/components/home/timeline-preview";
 import { TrilhasRail } from "@/components/home/trilhas-rail";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -40,7 +40,7 @@ export default function HomePage() {
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@graph": [organization, website] }} />
       <Hero />
-      <ThesisFeature />
+      <FeaturedQuote />
       <FeaturedArticles />
       <QuoteMarquee />
       <TrilhasRail />

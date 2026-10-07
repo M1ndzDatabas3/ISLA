@@ -5,6 +5,8 @@ export const DARK_QUERY = "(prefers-color-scheme: dark)";
 
 /**
  * Executado no <head> antes da primeira pintura, para não piscar o tema errado.
- * Mantenha a lógica igual à de resolve() em theme-provider.tsx.
+ * Padrão: claro. Escuro só por escolha ("dark") ou se a pessoa escolheu seguir o
+ * sistema ("system") e o sistema está escuro. Mantenha igual a readStored()/resolve()
+ * em theme-provider.tsx.
  */
-export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");var d=t==="dark"||((!t||t==="system")&&window.matchMedia("${DARK_QUERY}").matches);var e=document.documentElement;e.classList.toggle("dark",d);e.style.colorScheme=d?"dark":"light";}catch(_){}})();`;
+export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");var d=t==="dark"||(t==="system"&&window.matchMedia("${DARK_QUERY}").matches);var e=document.documentElement;e.classList.toggle("dark",d);e.style.colorScheme=d?"dark":"light";}catch(_){}})();`;

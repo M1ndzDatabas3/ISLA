@@ -6,6 +6,7 @@ Todo o conteúdo e a interface são em **português do Brasil** (datas `pt-BR`, 
 
 ## Como trabalhamos
 
+- **Publicação**: repositório https://github.com/M1ndzDatabas3/ISLA, deploy automático na Vercel a partir da `main`. Fluxo combinado em 07/10/2026: Claude faz a alteração, o usuário confere em `localhost:3217` e, **depois da aprovação**, Claude faz o commit (mensagem em português) e o push para a `main` sem perguntar de novo. Nada sem aprovação vai para a `main`. Na Vercel, `NEXT_PUBLIC_SITE_URL` precisa apontar para o domínio de produção.
 - Entrega **por fases**. Ao fim de cada fase: rodar o projeto, verificar em 375px, 768px e 1440px (claro e escuro), listar o que foi feito e o que ficou pendente, e **esperar o ok** antes da fase seguinte.
 - Decisão ambígua que muda arquitetura: perguntar. O resto: escolher o padrão sensato e registrar aqui.
 - Verificação visual com a skill `/browse` (gstack). Nunca usar as ferramentas `mcp__claude-in-chrome__*`.
@@ -79,6 +80,7 @@ Regras:
 - No escuro, vermelho em texto pequeno usa `#FF4747`; `#CD0000` sobre preto dá 3,4:1.
 - Bordas de controles (inputs, checkboxes) usam `--input` (`#8A8A8A`, 3,4:1); `--hair` é só decorativa.
 - Anel de foco: 2px, preto no claro e branco no escuro.
+- **Tema padrão: claro**, mesmo com o sistema em modo escuro (pedido em 07/10/2026). O escuro só vale por escolha: botão no header ou seletor Claro/Escuro/Sistema no rodapé e no menu mobile. A escolha fica em `localStorage` (`tema`); "light" não é gravado por ser o padrão.
 - Tons de seção (`tone-ink`, `tone-red`) existem, mas são de uso raro.
 
 ### Tipografia

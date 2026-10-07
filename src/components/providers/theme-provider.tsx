@@ -16,12 +16,13 @@ export type ResolvedTheme = "light" | "dark";
 
 const listeners = new Set<() => void>();
 
+/** Sem escolha registrada, o site abre no tema claro. */
 function readStored(): Theme {
   try {
     const value = localStorage.getItem(STORAGE_KEY);
-    return value === "light" || value === "dark" ? value : "system";
+    return value === "dark" || value === "system" ? value : "light";
   } catch {
-    return "system";
+    return "light";
   }
 }
 
@@ -47,7 +48,14 @@ const getSnapshot = () => {
   const theme = readStored();
   return `${theme}:${resolve(theme)}`;
 };
-const getServerSnapshot = () => "system:light";
+const getServerSnapshot = () => "light:light";
+
+/** Cor da barra do navegador no celular acompanha o tema escolhido. */
+function syncThemeColor(resolved: ResolvedTheme) {
+  document
+    .querySelectorAll('meta[name="theme-color"]')
+    .forEach((meta) => meta.setAttribute("content", resolved === "dark" ? "#0A0A0A" : "#FFFFFF"));
+}
 
 function applyToDocument(resolved: ResolvedTheme) {
   const root = document.documentElement;
@@ -57,6 +65,7 @@ function applyToDocument(resolved: ResolvedTheme) {
   document.head.appendChild(style);
   root.classList.toggle("dark", resolved === "dark");
   root.style.colorScheme = resolved;
+  syncThemeColor(resolved);
   requestAnimationFrame(() => requestAnimationFrame(() => style.remove()));
 }
 
@@ -76,11 +85,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
     if (isDark !== (resolvedTheme === "dark")) applyToDocument(resolvedTheme);
+    else syncThemeColor(resolvedTheme);
   }, [resolvedTheme]);
 
   const setTheme = useCallback((next: Theme) => {
     try {
-      if (next === "system") localStorage.removeItem(STORAGE_KEY);
+      // "light" é o padrão: não precisa ficar guardado.
+      if (next === "light") localStorage.removeItem(STORAGE_KEY);
       else localStorage.setItem(STORAGE_KEY, next);
     } catch {
       // Armazenamento bloqueado: o tema vale só para esta visita.

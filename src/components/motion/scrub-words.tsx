@@ -41,7 +41,10 @@ export function ScrubWords({ text, className }: { text: string; className?: stri
     <span ref={ref} className={className}>
       {words.map((word, i) => (
         <span key={i}>
-          <span data-word>{word}</span>
+          {/* Sem quebra dentro da palavra ("galgá-los" não vira "galgá-" / "los") */}
+          <span data-word className="whitespace-nowrap">
+            {word}
+          </span>
           {i < words.length - 1 ? " " : null}
         </span>
       ))}
