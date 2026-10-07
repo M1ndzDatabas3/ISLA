@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import { Logo } from "@/components/brand/Logo";
 import { CookiePreferencesButton } from "@/components/privacy/cookie-consent";
-import { SoonBadge } from "@/components/ui/soon-badge";
 import { sections, siteMap } from "@/lib/navigation";
 import { activeSocialLinks, siteConfig } from "@/site.config";
 
@@ -32,7 +31,7 @@ export function SiteFooter() {
 
         <nav
           aria-label="Mapa do site"
-          className="col-span-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:col-span-7 lg:col-start-6"
+          className="col-span-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:col-span-7 lg:col-start-6"
         >
           {siteMap.map((group) => (
             <div key={group.title}>
@@ -45,7 +44,6 @@ export function SiteFooter() {
                       className="block py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {link.label}
-                      {link.soon ? <SoonBadge className="ml-0 block translate-y-0 pt-0.5" /> : null}
                     </Link>
                   </li>
                 ))}

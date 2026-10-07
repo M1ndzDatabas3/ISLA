@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import { AuthorsExplorer, type AuthorListItem } from "@/components/editorial/authors-explorer";
 import { Section } from "@/components/layout/section";
+import { StaticAuthors } from "@/components/library/static-lists";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { getAutores } from "@/lib/content";
 import { sections } from "@/lib/navigation";
@@ -44,7 +45,7 @@ export default function AutoresPage() {
           Mauro Marini, com obras, influências e os textos onde aparecem.
         </p>
       </div>
-      <Suspense fallback={<p className="text-muted-foreground">Carregando…</p>}>
+      <Suspense fallback={<StaticAuthors authors={authors} />}>
         <AuthorsExplorer authors={authors} />
       </Suspense>
     </Section>

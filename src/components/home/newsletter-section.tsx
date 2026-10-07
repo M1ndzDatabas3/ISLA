@@ -10,8 +10,8 @@ export function NewsletterSection() {
             Um e-mail com o que publicamos de novo
           </h2>
           <p className="mt-6 max-w-[44ch] text-lead">
-            Novos textos, trilhas de estudo e a agenda de eventos. Sem propaganda, e seu e-mail não
-            é repassado a ninguém.
+            Novos textos, trilhas de estudo e seções do site. Sem propaganda, e seu e-mail não é
+            repassado a ninguém.
           </p>
         </div>
         <NewsletterForm origem="home" className="col-span-12 lg:col-span-5 lg:col-start-8" />

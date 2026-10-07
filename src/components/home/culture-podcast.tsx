@@ -2,6 +2,7 @@ import { SectionHeading } from "@/components/editorial/section-heading";
 import { Section } from "@/components/layout/section";
 import { getEpisodios, getObrasCulturais } from "@/lib/content";
 import { formatDate } from "@/lib/format";
+import { sections } from "@/lib/navigation";
 
 const tiposDeObra: Record<string, string> = {
   filme: "Filme",
@@ -29,6 +30,7 @@ export function CulturePodcast() {
             id="cultura-titulo"
             title="Cultura"
             description="Filmes, canções e romances que ajudam a entender a luta de classes na América Latina."
+            action={{ label: "Todas as obras", href: sections.cultura.href }}
           />
           <ul className="grid gap-x-[clamp(16px,2vw,32px)] sm:grid-cols-2 lg:grid-cols-3">
             {obras.map((obra) => (

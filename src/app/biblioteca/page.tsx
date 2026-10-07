@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import { Section } from "@/components/layout/section";
 import { LibraryExplorer } from "@/components/library/library-explorer";
+import { StaticLibrary } from "@/components/library/static-lists";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { getAutores, getLivros } from "@/lib/content";
 import { toBookSummary } from "@/lib/content/summaries";
@@ -39,7 +40,7 @@ export default function BibliotecaPage() {
           pode compartilhar.
         </p>
       </div>
-      <Suspense fallback={<p className="text-muted-foreground">Carregando a biblioteca…</p>}>
+      <Suspense fallback={<StaticLibrary books={books} />}>
         <LibraryExplorer books={books} authors={authors} />
       </Suspense>
     </Section>

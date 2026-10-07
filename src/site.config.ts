@@ -13,7 +13,17 @@ export interface SocialLink {
   href: string;
 }
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+/**
+ * URL pública do site, usada em canonical, og:image, sitemap e referências ABNT.
+ * Ordem: NEXT_PUBLIC_SITE_URL (domínio próprio, configure na Vercel) →
+ * domínio de produção que a Vercel expõe sozinha → localhost em desenvolvimento.
+ * Só variáveis NEXT_PUBLIC_*: o valor é o mesmo no servidor e no navegador.
+ */
+const vercelProduction = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL;
+const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (vercelProduction ? `https://${vercelProduction}` : "http://localhost:3000")
+).replace(/\/$/, "");
 
 export const siteConfig = {
   name: "Instituto Socialista Latino-Americano",

@@ -4,6 +4,7 @@ import { Link2, Share2 } from "lucide-react";
 
 import { toast } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/site.config";
 
 interface ShareButtonsProps {
   title: string;
@@ -38,9 +39,13 @@ const redes = [
   },
 ];
 
-/** Compartilhar: folha do sistema no celular, redes e copiar link. */
+/**
+ * Compartilhar: folha do sistema no celular, redes e copiar link. Os links das
+ * redes saem prontos do servidor (funcionam sem JavaScript).
+ */
 export function ShareButtons({ title, path, className }: ShareButtonsProps) {
-  const fullUrl = () => new URL(path, window.location.origin).toString();
+  const url = `${siteConfig.url}${path}`;
+  const fullUrl = () => url;
 
   async function nativeShare() {
     try {
@@ -74,11 +79,7 @@ export function ShareButtons({ title, path, className }: ShareButtonsProps) {
           className={item}
           target="_blank"
           rel="noopener noreferrer"
-          href="#"
-          onClick={(event) => {
-            event.preventDefault();
-            window.open(rede.url(fullUrl(), title), "_blank", "noopener");
-          }}
+          href={rede.url(url, title)}
         >
           {rede.label}
         </a>

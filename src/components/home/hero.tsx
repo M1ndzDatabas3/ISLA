@@ -126,13 +126,9 @@ export function Hero() {
             </Link>
           ) : (
             <JoinDialog key={entry.label}>
-              <button
-                type="button"
-                aria-haspopup="dialog"
-                className={`${className} w-full cursor-pointer`}
-              >
+              <a href={`${sections.sobre.href}#participar`} className={className}>
                 {content}
-              </button>
+              </a>
             </JoinDialog>
           );
         })}

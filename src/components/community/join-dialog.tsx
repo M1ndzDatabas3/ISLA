@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { Slot } from "radix-ui";
 import { startTransition, useActionState, useId, useState } from "react";
 
 import { registerInterest } from "@/app/actions/interesse";
@@ -13,7 +14,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { estados, type SiglaUF } from "@/lib/estados";
@@ -32,25 +32,36 @@ const inicial: InteresseState = { status: "idle" };
 const [consentimentoAntes, consentimentoDepois] =
   consentimentoInteresse.texto.split("Política de privacidade");
 
-/** Modal "Faça parte": contato de quem quer criar e desenvolver conteúdo no site. */
+/**
+ * Modal "Faça parte": contato de quem quer criar e desenvolver conteúdo no site.
+ * O gatilho pode ser um link de verdade (ex.: /sobre#participar): com JavaScript
+ * o clique abre o modal; sem ele, ou para buscadores, o link leva à página.
+ */
 export function JoinDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   // A cada abertura, um formulário novo (sem o estado do envio anterior).
   const [rodada, setRodada] = useState(0);
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(aberto) => {
-        setOpen(aberto);
-        if (aberto) setRodada((r) => r + 1);
-      }}
-    >
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-2xl">
-        <JoinForm key={rodada} />
-      </DialogContent>
-    </Dialog>
+    <>
+      <Slot.Root
+        aria-haspopup="dialog"
+        onClick={(event: React.MouseEvent) => {
+          // Ctrl/⌘ + clique ainda abre o link em outra aba.
+          if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+          event.preventDefault();
+          setRodada((r) => r + 1);
+          setOpen(true);
+        }}
+      >
+        {children}
+      </Slot.Root>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-2xl">
+          <JoinForm key={rodada} />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

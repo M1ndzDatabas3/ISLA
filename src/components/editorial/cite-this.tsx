@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsClient } from "@/hooks/use-is-client";
+import { siteConfig } from "@/site.config";
 import {
   abntBook,
   abntOnlineArticle,
@@ -14,34 +15,25 @@ import {
   citationToText,
   type ArticleCitationInput,
   type BookCitationInput,
-  type CitationParts,
 } from "@/lib/citation";
 
 type CiteThisProps =
   | { kind: "book"; book: BookCitationInput }
   | { kind: "article"; article: Omit<ArticleCitationInput, "acesso" | "url"> & { path: string } };
 
-/** "Como citar": ABNT e BibTeX, com botão de copiar. A data de acesso é a do leitor. */
-export function CiteThis(props: CiteThisProps) {
-  // Data de acesso e endereço só existem no navegador do leitor.
-  const isClient = useIsClient();
-  const acesso = isClient ? new Date() : null;
-  const origin = isClient ? window.location.origin : "";
+function build(props: CiteThisProps, acesso: Date | null) {
+  if (props.kind === "book") return { abnt: abntBook(props.book), bibtex: bibtexBook(props.book) };
+  const input = { ...props.article, url: `${siteConfig.url}${props.article.path}`, acesso };
+  return { abnt: abntOnlineArticle(input), bibtex: bibtexOnline(input) };
+}
 
-  let abnt: CitationParts;
-  let bibtex: string;
-  if (props.kind === "book") {
-    abnt = abntBook(props.book);
-    bibtex = bibtexBook(props.book);
-  } else {
-    const input = {
-      ...props.article,
-      url: `${origin}${props.article.path}`,
-      acesso: acesso ?? new Date(`${props.article.data}T12:00:00Z`),
-    };
-    abnt = abntOnlineArticle(input);
-    bibtex = bibtexOnline(input);
-  }
+/**
+ * "Como citar": ABNT e BibTeX, com botão de copiar. O endereço já vem completo
+ * do servidor; a data de acesso é a do leitor, recalculada no momento da cópia.
+ */
+export function CiteThis(props: CiteThisProps) {
+  const isClient = useIsClient();
+  const { abnt, bibtex } = build(props, isClient ? new Date() : null);
 
   async function copy(text: string, label: string) {
     try {
@@ -69,7 +61,7 @@ export function CiteThis(props: CiteThisProps) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => copy(citationToText(abnt), "Referência ABNT")}
+          onClick={() => copy(citationToText(build(props, new Date()).abnt), "Referência ABNT")}
         >
           <Copy aria-hidden strokeWidth={1.5} />
           Copiar ABNT
@@ -79,7 +71,11 @@ export function CiteThis(props: CiteThisProps) {
         <pre className="w-full overflow-x-auto border-l-2 border-brand bg-muted p-4 font-mono text-[0.8125rem] leading-relaxed">
           {bibtex}
         </pre>
-        <Button variant="outline" size="sm" onClick={() => copy(bibtex, "Entrada BibTeX")}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => copy(build(props, new Date()).bibtex, "Entrada BibTeX")}
+        >
           <Copy aria-hidden strokeWidth={1.5} />
           Copiar BibTeX
         </Button>

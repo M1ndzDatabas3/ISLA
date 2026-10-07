@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { ConferirMark } from "@/components/editorial/conferir";
 import { JoinDialog } from "@/components/community/join-dialog";
 import { Section } from "@/components/layout/section";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -128,31 +127,30 @@ export default function SobrePage() {
         </div>
       </Section>
 
-      <Section tone="paper" divider aria-labelledby="contato">
-        <div className="grid-page gap-y-6">
-          <h2 id="contato" className="col-span-12 font-display text-h2 lg:col-span-4">
-            Contato
-          </h2>
-          <p className="col-span-12 max-w-[56ch] text-muted-foreground lg:col-span-7 lg:col-start-6">
-            Para correções, sugestões de leitura e assuntos de imprensa, escreva para{" "}
-            {siteConfig.contactEmail ? (
+      {/* Contato só aparece quando houver e-mail institucional (site.config.ts). */}
+      {siteConfig.contactEmail ? (
+        <Section tone="paper" divider aria-labelledby="contato">
+          <div className="grid-page gap-y-6">
+            <h2 id="contato" className="col-span-12 font-display text-h2 lg:col-span-4">
+              Contato
+            </h2>
+            <p className="col-span-12 max-w-[56ch] text-muted-foreground lg:col-span-7 lg:col-start-6">
+              Para correções, sugestões de leitura e assuntos de imprensa, escreva para{" "}
               <a
                 href={`mailto:${siteConfig.contactEmail}`}
                 className="link-underline text-foreground"
               >
                 {siteConfig.contactEmail}
               </a>
-            ) : (
-              <ConferirMark label="e-mail institucional a conferir" />
-            )}
-            . Sobre dados pessoais, veja a{" "}
-            <Link href={sections.privacidade.href} className="link-underline text-foreground">
-              Política de privacidade
-            </Link>
-            .
-          </p>
-        </div>
-      </Section>
+              . Sobre dados pessoais, veja a{" "}
+              <Link href={sections.privacidade.href} className="link-underline text-foreground">
+                Política de privacidade
+              </Link>
+              .
+            </p>
+          </div>
+        </Section>
+      ) : null}
     </>
   );
 }

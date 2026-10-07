@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavigationMenu } from "radix-ui";
 
-import { SoonBadge } from "@/components/ui/soon-badge";
 import { megaMenu, type MegaMenuItem, type NavGroup } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +22,27 @@ export function MegaMenu({ className }: { className?: string }) {
           const current = [item.href, ...item.groups.flatMap((g) => g.links.map((l) => l.href))]
             .filter((href): href is string => Boolean(href))
             .some((href) => pathname.startsWith(href.split("?")[0]!));
+          const links = item.groups.flatMap((g) => g.links);
+
+          // Item com um único destino (ex.: Instituto → Sobre) vira link simples, sem painel.
+          if (links.length <= 1 && !item.feature) {
+            const href = item.href ?? links[0]?.href ?? "/";
+            return (
+              <NavigationMenu.Item key={item.label}>
+                <NavigationMenu.Link asChild active={current}>
+                  <Link
+                    href={href}
+                    className={cn(
+                      "inline-flex h-11 items-center px-3 font-sans text-sm transition-colors hover:text-foreground",
+                      current ? "text-foreground" : "text-muted-foreground",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+            );
+          }
           return (
             <NavigationMenu.Item key={item.label}>
               <NavigationMenu.Trigger
@@ -123,7 +143,6 @@ function MegaGroup({ group }: { group: NavGroup }) {
                   <>
                     <span className="font-display text-[1.25rem] leading-tight transition-colors group-hover:text-brand-text">
                       {link.label}
-                      {link.soon ? <SoonBadge /> : null}
                     </span>
                     <span className="mt-1 block text-sm leading-snug text-muted-foreground">
                       {link.description}

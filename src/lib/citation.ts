@@ -93,8 +93,11 @@ export interface ArticleCitationInput {
   /** Data ISO de publicação. */
   data: string;
   url: string;
-  acesso: Date;
+  /** Data em que o leitor acessa; sem ela (HTML do servidor), sai um marcador. */
+  acesso?: Date | null;
 }
+
+const ACESSO_PENDENTE = "[data do seu acesso]";
 
 /** Artigo assinado pela redação: entrada pela instituição. */
 export function abntOnlineArticle({
@@ -107,7 +110,7 @@ export function abntOnlineArticle({
   return {
     before: `${site.toLocaleUpperCase("pt-BR")}. ${titulo}. `,
     emphasis: site,
-    after: `, ${abntDate(new Date(`${data}T12:00:00Z`))}. Disponível em: ${url}. Acesso em: ${abntDate(acesso)}.`,
+    after: `, ${abntDate(new Date(`${data}T12:00:00Z`))}. Disponível em: ${url}. Acesso em: ${acesso ? abntDate(acesso) : ACESSO_PENDENTE}.`,
   };
 }
 
@@ -155,7 +158,7 @@ export function bibtexOnline({ titulo, site, data, url, acesso }: ArticleCitatio
     ["year", data.slice(0, 4)],
     ["date", data],
     ["url", url],
-    ["urldate", acesso.toISOString().slice(0, 10)],
+    ["urldate", acesso ? acesso.toISOString().slice(0, 10) : ACESSO_PENDENTE],
   ];
   return `@online{${key},\n${campos.map(([k, v]) => `  ${k.padEnd(8)} = {${k === "author" ? v : bibtexEscape(v)}}`).join(",\n")}\n}`;
 }

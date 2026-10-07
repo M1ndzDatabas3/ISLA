@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { ConferirMark } from "@/components/editorial/conferir";
 import { Section } from "@/components/layout/section";
 import { CookiePreferencesButton } from "@/components/privacy/cookie-consent";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -17,7 +18,11 @@ export const metadata: Metadata = {
 };
 
 const atualizadaEm = "7 de outubro de 2026";
-const contato = siteConfig.contactEmail || "[CONFERIR e-mail do encarregado de dados]";
+const contato = siteConfig.contactEmail ? (
+  <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+) : (
+  <ConferirMark label="e-mail do encarregado de dados a conferir" />
+);
 
 export default function PrivacidadePage() {
   return (
@@ -50,8 +55,9 @@ export default function PrivacidadePage() {
 
           <h2 id="controlador">Quem trata os dados</h2>
           <p>
-            {siteConfig.name}, inscrito no CNPJ [CONFERIR CNPJ], com sede em [CONFERIR endereço].
-            Para qualquer assunto sobre dados pessoais, escreva para {contato}.
+            {siteConfig.name}, inscrito no CNPJ <ConferirMark label="a conferir" />, com sede em{" "}
+            <ConferirMark label="endereço a conferir" />. Para qualquer assunto sobre dados
+            pessoais, escreva para {contato}.
           </p>
 
           <h2 id="navegacao">Navegação e armazenamento no navegador</h2>
@@ -85,7 +91,7 @@ export default function PrivacidadePage() {
             Depois do cancelamento, o endereço é apagado em até 30 dias; guardamos apenas o registro
             de que houve consentimento e revogação, pelo tempo necessário para comprovar que a lei
             foi cumprida (art. 16). O serviço de envio de e-mails será indicado aqui quando for
-            contratado [CONFERIR].
+            contratado <ConferirMark />.
           </p>
 
           <h2 id="faca-parte">Faça parte</h2>

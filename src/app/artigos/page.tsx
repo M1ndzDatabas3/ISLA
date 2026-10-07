@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import { ArticlesExplorer, type ArticleListItem } from "@/components/article/articles-explorer";
 import { Section } from "@/components/layout/section";
+import { StaticArticles } from "@/components/library/static-lists";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { getArtigos } from "@/lib/content";
 import { toArticleCard } from "@/lib/content/summaries";
@@ -41,7 +42,7 @@ export default function ArtigosPage() {
           região, formato e nível.
         </p>
       </div>
-      <Suspense fallback={<p className="text-muted-foreground">Carregando os artigos…</p>}>
+      <Suspense fallback={<StaticArticles articles={articles} />}>
         <ArticlesExplorer articles={articles} />
       </Suspense>
     </Section>

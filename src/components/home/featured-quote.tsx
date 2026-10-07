@@ -75,6 +75,14 @@ export function FeaturedQuote() {
               </Link>
               <span className="text-muted-foreground">{citacao.fonte}</span>
               {citacao.conferir ? <ConferirNote nota={citacao.conferir} /> : null}
+              {citacao.original ? (
+                <span
+                  lang={citacao.original.idioma}
+                  className="basis-full pt-1 text-meta text-muted-foreground italic"
+                >
+                  No original: „{citacao.original.texto}“
+                </span>
+              ) : null}
             </figcaption>
           </figure>
 

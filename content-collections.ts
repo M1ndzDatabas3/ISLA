@@ -247,6 +247,8 @@ const citacoes = defineCollection({
     livro: z.string().optional(),
     /** Parágrafo de contexto, usado quando a citação aparece em destaque. */
     contexto: z.string().optional(),
+    /** Texto na língua original, quando a tradução é do próprio Instituto. */
+    original: z.object({ texto: z.string(), idioma: z.string() }).optional(),
   }),
   transform: (doc) => ({ ...doc, slug: doc._meta.path }),
 });

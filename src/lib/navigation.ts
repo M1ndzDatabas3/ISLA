@@ -13,7 +13,7 @@ export interface NavLink {
   label: string;
   href: string;
   description?: string;
-  /** Seção ainda em preparação: os menus mostram "em breve". */
+  /** Seção ainda em preparação: fica fora dos menus, do sitemap e da busca até abrir. */
   soon?: boolean;
 }
 
@@ -87,7 +87,6 @@ export const sections = {
     label: "Cultura",
     href: "/cultura",
     description: "Cinema, música, literatura e artes visuais.",
-    soon: true,
   },
   podcast: {
     label: "Podcast e vídeos",
@@ -129,7 +128,14 @@ export type SectionKey = keyof typeof sections;
 const toLinks = (base: string, param: string, list: readonly { slug: string; label: string }[]) =>
   list.map((t) => ({ label: t.label, href: `${base}?${param}=${t.slug}` }));
 
-export const megaMenu: MegaMenuItem[] = [
+/** Tira dos menus as seções em preparação e os grupos que ficarem vazios. */
+function semEmBreve<T extends { links: NavLink[] }>(groups: T[]): T[] {
+  return groups
+    .map((g) => ({ ...g, links: g.links.filter((l) => !l.soon) }))
+    .filter((g) => g.links.length > 0);
+}
+
+const megaMenuCompleto: MegaMenuItem[] = [
   {
     label: "Artigos",
     href: sections.artigos.href,
@@ -186,12 +192,15 @@ export const megaMenu: MegaMenuItem[] = [
         links: [sections.trilhas, sections.glossario],
       },
       {
-        title: "Ideias e história",
-        links: [sections.mapa, sections.linhaDoTempo, sections.debates],
-      },
-      {
-        title: "Cultura e mídia",
-        links: [sections.cultura, sections.podcast, sections.agenda],
+        title: "História e cultura",
+        links: [
+          sections.linhaDoTempo,
+          sections.cultura,
+          sections.mapa,
+          sections.debates,
+          sections.podcast,
+          sections.agenda,
+        ],
       },
     ],
     feature: {
@@ -208,8 +217,13 @@ export const megaMenu: MegaMenuItem[] = [
   },
 ];
 
-/** Agrupamento usado no menu mobile e no footer. */
-export const siteMap: NavGroup[] = [
+export const megaMenu: MegaMenuItem[] = megaMenuCompleto.map((item) => ({
+  ...item,
+  groups: semEmBreve(item.groups),
+}));
+
+/** Agrupamento usado no menu mobile e no footer (sem as seções em preparação). */
+export const siteMap: NavGroup[] = semEmBreve([
   {
     title: "Leituras",
     links: [sections.biblioteca, sections.acervo, sections.artigos, sections.autores],
@@ -219,14 +233,16 @@ export const siteMap: NavGroup[] = [
     links: [
       sections.trilhas,
       sections.glossario,
-      sections.mapa,
       sections.linhaDoTempo,
+      sections.cultura,
+      sections.mapa,
       sections.debates,
+      sections.podcast,
+      sections.agenda,
     ],
   },
-  { title: "Cultura e mídia", links: [sections.cultura, sections.podcast, sections.agenda] },
   { title: "Instituto", links: [sections.sobre, sections.publique, sections.privacidade] },
-];
+]);
 
 /** Atalhos da barra inferior no mobile. */
 export const bottomNav = [
