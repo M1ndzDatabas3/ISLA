@@ -5,20 +5,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavigationMenu } from "radix-ui";
 
-import { megaMenu, type MegaMenuItem, type NavGroup } from "@/lib/navigation";
+import type { MegaMenuItem, NavGroup } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 /**
- * Navegação principal do desktop com mega menu da taxonomia.
- * O viewport ocupa a largura toda, logo abaixo do header (que é o bloco de contenção).
+ * Navegação principal do desktop com mega menu (itens montados no servidor, em
+ * src/lib/menu.ts). Passar o mouse abre o painel; clicar no nome da seção leva
+ * à página-mestre dela. O viewport ocupa a largura toda, logo abaixo do header.
  */
-export function MegaMenu({ className }: { className?: string }) {
+export function MegaMenu({ items, className }: { items: MegaMenuItem[]; className?: string }) {
   const pathname = usePathname();
 
   return (
-    <NavigationMenu.Root delayDuration={80} className={cn("hidden lg:block", className)}>
+    // A chave pela rota fecha o painel a cada navegação.
+    <NavigationMenu.Root
+      key={pathname}
+      delayDuration={80}
+      className={cn("hidden lg:block", className)}
+    >
       <NavigationMenu.List className="flex items-center gap-1">
-        {megaMenu.map((item) => {
+        {items.map((item) => {
           const current = [item.href, ...item.groups.flatMap((g) => g.links.map((l) => l.href))]
             .filter((href): href is string => Boolean(href))
             .some((href) => pathname.startsWith(href.split("?")[0]!));
@@ -45,18 +51,21 @@ export function MegaMenu({ className }: { className?: string }) {
           }
           return (
             <NavigationMenu.Item key={item.label}>
-              <NavigationMenu.Trigger
-                className={cn(
-                  "group inline-flex h-11 cursor-pointer items-center gap-1 px-3 font-sans text-sm transition-colors hover:text-foreground data-[state=open]:text-foreground",
-                  current ? "text-foreground" : "text-muted-foreground",
-                )}
-              >
-                {item.label}
-                <ChevronDown
-                  aria-hidden
-                  strokeWidth={1.5}
-                  className="size-3.5 transition-transform duration-300 ease-poster group-data-[state=open]:rotate-180"
-                />
+              <NavigationMenu.Trigger asChild>
+                <Link
+                  href={item.href ?? "/"}
+                  className={cn(
+                    "group inline-flex h-11 cursor-pointer items-center gap-1 px-3 font-sans text-sm transition-colors hover:text-foreground data-[state=open]:text-foreground",
+                    current ? "text-foreground" : "text-muted-foreground",
+                  )}
+                >
+                  {item.label}
+                  <ChevronDown
+                    aria-hidden
+                    strokeWidth={1.5}
+                    className="size-3.5 transition-transform duration-300 ease-poster group-data-[state=open]:rotate-180"
+                  />
+                </Link>
               </NavigationMenu.Trigger>
               <NavigationMenu.Content className="data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in-0 data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out-0">
                 <MegaPanel item={item} />
@@ -151,6 +160,11 @@ function MegaGroup({ group }: { group: NavGroup }) {
                 ) : (
                   <span className="font-sans text-[0.9375rem] transition-colors group-hover:text-brand-text">
                     {link.label}
+                    {link.count ? (
+                      <span className="ml-1.5 text-meta text-muted-foreground tabular-nums">
+                        {link.count}
+                      </span>
+                    ) : null}
                   </span>
                 )}
               </Link>

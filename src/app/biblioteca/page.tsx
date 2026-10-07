@@ -26,7 +26,11 @@ export default function BibliotecaPage() {
   return (
     <Section tone="paper" className="pt-[clamp(32px,5vw,64px)]">
       <Breadcrumb
-        items={[{ label: "Início", href: "/" }, { label: "Biblioteca" }]}
+        items={[
+          { label: "Início", href: "/" },
+          { label: "Leituras", href: "/leituras" },
+          { label: "Biblioteca" },
+        ]}
         className="mb-10"
       />
       <div className="mb-12 grid-page items-end gap-y-4 lg:mb-16">

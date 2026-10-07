@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SearchRoot } from "@/components/search/search-root";
 import { Toaster } from "@/components/ui/sonner";
 import { brandIcons } from "@/lib/brand";
+import { buildMegaMenu } from "@/lib/menu";
 import { themeInitScript } from "@/lib/theme";
 import { palette } from "@/lib/tokens";
 import { siteConfig } from "@/site.config";
@@ -63,7 +64,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <SmoothScroll>
               <SearchRoot>
                 <SkipLink />
-                <SiteHeader />
+                <SiteHeader menu={buildMegaMenu()} />
                 <main id="conteudo" tabIndex={-1} className="pt-[var(--header-h)] outline-none">
                   {children}
                 </main>

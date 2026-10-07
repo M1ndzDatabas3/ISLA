@@ -21,7 +21,11 @@ export default function GlossarioPage() {
   return (
     <Section tone="paper" className="pt-[clamp(32px,5vw,64px)]">
       <Breadcrumb
-        items={[{ label: "Início", href: "/" }, { label: "Glossário" }]}
+        items={[
+          { label: "Início", href: "/" },
+          { label: "Explorar", href: "/explorar" },
+          { label: "Glossário" },
+        ]}
         className="mb-10"
       />
       <div className="mb-12 grid-page items-end gap-y-4 lg:mb-16">

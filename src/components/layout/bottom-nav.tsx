@@ -8,7 +8,7 @@ import { useScrollState } from "@/hooks/use-scroll-state";
 import { bottomNav } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
-const icons = { inicio: House, biblioteca: LibraryBig, trilhas: Route, busca: Search } as const;
+const icons = { inicio: House, leituras: LibraryBig, trilhas: Route, busca: Search } as const;
 
 /** Atalhos fixos no mobile. Some ao rolar para baixo e volta ao rolar para cima. */
 export function BottomNav() {

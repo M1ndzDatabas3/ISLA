@@ -32,7 +32,11 @@ export default function AutoresPage() {
   return (
     <Section tone="paper" className="pt-[clamp(32px,5vw,64px)]">
       <Breadcrumb
-        items={[{ label: "Início", href: "/" }, { label: "Autores" }]}
+        items={[
+          { label: "Início", href: "/" },
+          { label: "Leituras", href: "/leituras" },
+          { label: "Autores" },
+        ]}
         className="mb-10"
       />
       <div className="mb-12 grid-page items-end gap-y-4 lg:mb-16">

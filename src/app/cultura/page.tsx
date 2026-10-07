@@ -26,7 +26,11 @@ export default function CulturaPage() {
   return (
     <Section tone="paper" className="pt-[clamp(32px,5vw,64px)]">
       <Breadcrumb
-        items={[{ label: "Início", href: "/" }, { label: sections.cultura.label }]}
+        items={[
+          { label: "Início", href: "/" },
+          { label: "Explorar", href: "/explorar" },
+          { label: sections.cultura.label },
+        ]}
         className="mb-12"
       />
       <div className="grid-page items-end gap-y-6">

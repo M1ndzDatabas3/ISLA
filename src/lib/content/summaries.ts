@@ -12,7 +12,9 @@ import {
   type Tradicao,
 } from "@/lib/taxonomy";
 
-import { getAutoresBySlugs, temaDoArtigo, type Artigo, type Livro } from "./index";
+import type { AuthorCardData } from "@/components/editorial/author-card";
+
+import { getAutoresBySlugs, temaDoArtigo, type Artigo, type Autor, type Livro } from "./index";
 
 export interface BookSummary {
   slug: string;
@@ -94,5 +96,18 @@ export function toArticleCard(artigo: Artigo): ArticleCardData {
     tipo: labelOf("tipoDeArtigo", artigo.tipo),
     tema: temaDoArtigo(artigo),
     imagem: artigo.capa ? { src: artigo.capa.src, alt: artigo.capa.alt } : null,
+  };
+}
+
+export function toAuthorCard(autor: Autor): AuthorCardData & { slug: string } {
+  return {
+    slug: autor.slug,
+    href: `/autores/${autor.slug}`,
+    nome: autor.nome,
+    nascimento: autor.nascimento,
+    morte: autor.morte,
+    nacionalidade: autor.nacionalidade,
+    tradicoes: autor.tradicoes.map((t) => labelOf("tradicao", t)),
+    retrato: autor.retrato ? { src: autor.retrato.src, alt: autor.retrato.alt } : null,
   };
 }

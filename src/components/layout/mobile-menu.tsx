@@ -125,7 +125,17 @@ function MenuPanel({ onClose, onTimeline }: MenuPanelProps) {
               {siteMap.map((group) => (
                 <div key={group.title}>
                   <p data-item className="mb-2 font-sans text-meta text-muted-foreground">
-                    {group.title}
+                    {group.href ? (
+                      <Link
+                        href={group.href}
+                        onClick={onClose}
+                        className="inline-flex min-h-6 items-center underline-offset-4 hover:text-foreground hover:underline"
+                      >
+                        {group.title}
+                      </Link>
+                    ) : (
+                      group.title
+                    )}
                   </p>
                   <ul className="flex flex-col">
                     {group.links.map((link) => (

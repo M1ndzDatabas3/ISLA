@@ -35,7 +35,15 @@ export function SiteFooter() {
         >
           {siteMap.map((group) => (
             <div key={group.title}>
-              <p className="mb-4 font-sans text-sm font-medium">{group.title}</p>
+              <p className="mb-4 font-sans text-sm font-medium">
+                {group.href ? (
+                  <Link href={group.href} className="transition-colors hover:text-brand-text">
+                    {group.title}
+                  </Link>
+                ) : (
+                  group.title
+                )}
+              </p>
               <ul className="flex flex-col gap-1">
                 {group.links.map((link) => (
                   <li key={link.href}>

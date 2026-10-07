@@ -7,6 +7,7 @@ import { Logo } from "@/components/brand/Logo";
 import { useSearch } from "@/components/search/search-root";
 import { useIsClient } from "@/hooks/use-is-client";
 import { useScrollState } from "@/hooks/use-scroll-state";
+import type { MegaMenuItem } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 import { MegaMenu } from "./mega-menu";
@@ -18,7 +19,7 @@ import { ThemeToggle } from "./theme-toggle";
  * e a logo passa para a versão de texto branco.
  * É `fixed` (e não `sticky`) para que o encolhimento não mude o layout da página.
  */
-export function SiteHeader() {
+export function SiteHeader({ menu }: { menu: MegaMenuItem[] }) {
   const { scrolled } = useScrollState(24);
   const search = useSearch();
   // A dica do atalho depende do sistema; só dá para saber no navegador.
@@ -52,7 +53,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <MegaMenu className="mr-auto" />
+        <MegaMenu items={menu} className="mr-auto" />
 
         <div className="flex items-center gap-1 lg:gap-2">
           <button

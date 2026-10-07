@@ -37,7 +37,11 @@ export default function TrilhasPage() {
       <JsonLd data={{ "@context": "https://schema.org", ...jsonLd }} />
       <Section tone="paper" className="pt-[clamp(32px,5vw,64px)]">
         <Breadcrumb
-          items={[{ label: "Início", href: "/" }, { label: sections.trilhas.label }]}
+          items={[
+            { label: "Início", href: "/" },
+            { label: "Explorar", href: "/explorar" },
+            { label: sections.trilhas.label },
+          ]}
           className="mb-12"
         />
         <div className="grid-page items-end gap-y-6">

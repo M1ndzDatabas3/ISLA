@@ -1,24 +1,17 @@
-import {
-  areas,
-  disponibilidades,
-  filterParams,
-  niveis,
-  regioes,
-  tiposDeArtigo,
-  tiposDeObra,
-  tradicoes,
-} from "@/lib/taxonomy";
-
 export interface NavLink {
   label: string;
   href: string;
   description?: string;
+  /** Quantos itens a categoria tem (artigos, livros), mostrado no menu. */
+  count?: number;
   /** Seção ainda em preparação: fica fora dos menus, do sitemap e da busca até abrir. */
   soon?: boolean;
 }
 
 export interface NavGroup {
   title: string;
+  /** Página-mestre do grupo (rodapé e menu mobile ligam o título a ela). */
+  href?: string;
   links: NavLink[];
   /** Quantas colunas o grupo ocupa no mega menu (listas longas ocupam 2). */
   span?: 1 | 2;
@@ -35,6 +28,16 @@ export interface MegaMenuItem {
 
 /** Todas as seções do site. Footer, menu mobile e páginas provisórias leem daqui. */
 export const sections = {
+  leituras: {
+    label: "Leituras",
+    href: "/leituras",
+    description: "Biblioteca comentada e autores, com todas as categorias do acervo.",
+  },
+  explorar: {
+    label: "Explorar",
+    href: "/explorar",
+    description: "Trilhas de estudo, glossário, linha do tempo e cultura.",
+  },
   artigos: {
     label: "Artigos",
     href: "/artigos",
@@ -125,111 +128,23 @@ export const sections = {
 
 export type SectionKey = keyof typeof sections;
 
-const toLinks = (base: string, param: string, list: readonly { slug: string; label: string }[]) =>
-  list.map((t) => ({ label: t.label, href: `${base}?${param}=${t.slug}` }));
-
 /** Tira dos menus as seções em preparação e os grupos que ficarem vazios. */
-function semEmBreve<T extends { links: NavLink[] }>(groups: T[]): T[] {
+export function semEmBreve<T extends { links: NavLink[] }>(groups: T[]): T[] {
   return groups
     .map((g) => ({ ...g, links: g.links.filter((l) => !l.soon) }))
     .filter((g) => g.links.length > 0);
 }
 
-const megaMenuCompleto: MegaMenuItem[] = [
-  {
-    label: "Artigos",
-    href: sections.artigos.href,
-    groups: [
-      { title: "Por área", links: toLinks("/artigos", filterParams.area, areas) },
-      {
-        title: "Por tradição",
-        links: toLinks("/artigos", filterParams.tradicao, tradicoes),
-        span: 2,
-      },
-      { title: "Por região", links: toLinks("/artigos", filterParams.regiao, regioes) },
-      {
-        title: "Por formato",
-        links: toLinks("/artigos", filterParams.tipoDeArtigo, tiposDeArtigo),
-      },
-    ],
-    feature: {
-      title: "Primeira leitura",
-      text: "Textos de nível Introdutório explicam os conceitos do zero, com exemplos e indicações de leitura.",
-      href: `/artigos?${filterParams.nivel}=introdutorio`,
-      cta: "Ver artigos introdutórios",
-    },
-  },
-  {
-    label: "Leituras",
-    href: sections.biblioteca.href,
-    groups: [
-      {
-        title: "Onde ler",
-        links: [sections.biblioteca, sections.acervo, sections.autores],
-      },
-      {
-        title: "Tipo de obra",
-        links: toLinks("/biblioteca", filterParams.tipoDeObra, tiposDeObra),
-      },
-      { title: "Nível de leitura", links: toLinks("/biblioteca", filterParams.nivel, niveis) },
-      {
-        title: "Disponibilidade",
-        links: toLinks("/biblioteca", filterParams.disponibilidade, disponibilidades),
-      },
-    ],
-    feature: {
-      title: "Por onde começar",
-      text: "Livros de nível introdutório, que não exigem leitura prévia, com indicação do que ler em seguida.",
-      href: `/biblioteca?${filterParams.nivel}=introdutorio`,
-      cta: "Ver livros introdutórios",
-    },
-  },
-  {
-    label: "Explorar",
-    groups: [
-      {
-        title: "Estudar",
-        links: [sections.trilhas, sections.glossario],
-      },
-      {
-        title: "História e cultura",
-        links: [
-          sections.linhaDoTempo,
-          sections.cultura,
-          sections.mapa,
-          sections.debates,
-          sections.podcast,
-          sections.agenda,
-        ],
-      },
-    ],
-    feature: {
-      title: "Do Manifesto ao MST",
-      text: "A linha do tempo reúne revoluções, fundações e rupturas, com atenção ao que aconteceu na América Latina.",
-      href: sections.linhaDoTempo.href,
-      cta: "Percorrer a linha do tempo",
-    },
-  },
-  {
-    label: "Instituto",
-    href: sections.sobre.href,
-    groups: [{ title: "O Instituto", links: [sections.sobre, sections.publique] }],
-  },
-];
-
-export const megaMenu: MegaMenuItem[] = megaMenuCompleto.map((item) => ({
-  ...item,
-  groups: semEmBreve(item.groups),
-}));
-
 /** Agrupamento usado no menu mobile e no footer (sem as seções em preparação). */
 export const siteMap: NavGroup[] = semEmBreve([
   {
     title: "Leituras",
+    href: sections.leituras.href,
     links: [sections.biblioteca, sections.acervo, sections.artigos, sections.autores],
   },
   {
     title: "Explorar",
+    href: sections.explorar.href,
     links: [
       sections.trilhas,
       sections.glossario,
@@ -241,13 +156,17 @@ export const siteMap: NavGroup[] = semEmBreve([
       sections.agenda,
     ],
   },
-  { title: "Instituto", links: [sections.sobre, sections.publique, sections.privacidade] },
+  {
+    title: "Instituto",
+    href: sections.sobre.href,
+    links: [sections.sobre, sections.publique, sections.privacidade],
+  },
 ]);
 
 /** Atalhos da barra inferior no mobile. */
 export const bottomNav = [
   { key: "inicio", label: "Início", href: "/" },
-  { key: "biblioteca", label: "Leituras", href: sections.biblioteca.href },
+  { key: "leituras", label: "Leituras", href: sections.leituras.href },
   { key: "trilhas", label: "Trilhas", href: sections.trilhas.href },
   { key: "busca", label: "Busca", href: sections.busca.href },
 ] as const;
